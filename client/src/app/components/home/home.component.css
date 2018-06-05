@@ -1,0 +1,19 @@
+.home-page {
+  margin: 20px 0;
+  padding: 50px;
+  text-align: center;
+}
+.home-page h1 {
+  color: #f2f2f2;
+  font-size: 34px;
+  margin-bottom: 20px;
+}
+.home-page p {
+  color: #f2f2f2;
+  font-size: 20px;
+}
+.big-svg {
+  width: 70%;
+  margin: 20px auto;
+  height: 100px;
+}
