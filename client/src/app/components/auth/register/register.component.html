@@ -1,39 +1,88 @@
 
   <div class="col-md-6 offset-md-3 mt-5 mb-5 p-4 form-styles">
 
-    <form [formGroup]="form">
+    <form [formGroup]="form" (submit)="register()">
       <h3 class="text-center mb-3">Register new Accaunt</h3>
       <div class="form-group">
         <label for="username">User name</label>
         <input type="text" class="form-control" name="username" placeholder="*User name"
-         formControlName="username">
+         formControlName="username"
+         [ngClass]="{ 'is-invalid': (form.controls['username'].errors && form.controls['username'].dirty) ||
+          (usernameValid && form.controls['username'].dirty) }">
+
+        <ul>
+          <li *ngIf="(form.controls['username'].errors?.minlength && form.controls['username'].dirty) ||
+            (form.controls['username'].errors?.maxlength && form.controls['username'].dirty)">
+            Minimum characters: 2, Maximum characters: 30 </li>
+          <li *ngIf="(form.controls['username'].errors?.required && form.controls['username'].dirty)">
+            This field is required</li>
+          <li *ngIf="(form.controls['username'].errors?.usernameValid && form.controls['username'].dirty)">
+            Username must not have any special characters</li>
+        </ul>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="text" class="form-control" name="email" placeholder="*E-mail"
-         formControlName="email">
+        <input type="email" class="form-control" name="email" placeholder="*E-mail"
+         formControlName="email"
+         [ngClass]="{ 'is-invalid': (form.controls['email'].errors && form.controls['email'].dirty) ||
+          (emailValid && form.controls['email'].dirty) }">
+
+         <ul>
+          <li *ngIf="(form.controls['email'].errors?.minlength && form.controls['email'].dirty) ||
+            (form.controls['email'].errors?.maxlength && form.controls['email'].dirty)">
+            Minimum characters: 6, Maximum characters: 35 </li>
+          <li *ngIf="(form.controls['email'].errors?.required && form.controls['email'].dirty)">
+            This field is required</li>
+          <li *ngIf="(form.controls['email'].errors?.emailValid && form.controls['email'].dirty)">
+            This must be a valid e-mail</li>
+        </ul>
+
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="text" class="form-control" name="password" placeholder="*Password"
-         formControlName="password">
+        <input type="password" class="form-control" name="password" placeholder="*Password"
+         formControlName="password"
+         [ngClass]="{ 'is-invalid': (form.controls['password'].errors && form.controls['password'].dirty) ||
+         (!passwordValidator && form.controls['password'].dirty) }">
+
+         <ul>
+          <li *ngIf="(form.controls['password'].errors?.minlength && form.controls['password'].dirty) ||
+            (form.controls['password'].errors?.maxlength && form.controls['password'].dirty)">
+            Minimum characters: 6, Maximum characters: 35 </li>
+          <li *ngIf="(form.controls['password'].errors?.required && form.controls['password'].dirty)">
+            This field is required</li>
+          <li *ngIf="(form.controls['password'].errors?.passwordValid && form.controls['password'].dirty)">
+            Password must be at least 8 characters but no more than 35,
+             have numbers,spacial characters, capital & small letters!
+          </li>
+        </ul>
       </div>
       <div class="form-group">
         <label for="confirm">Confirm</label>
-        <input type="text" class="form-control" name="confirm" placeholder="*Confirm password"
+        <input type="password" class="form-control" name="confirm" placeholder="*Confirm password"
          formControlName="confirm">
+
+         <ul>
+          <li *ngIf="form.errors?.matchingPass && form.controls['confirm'].dirty">
+            Password do not match </li>
+          <li *ngIf="(form.controls['confirm'].errors?.required && form.controls['confirm'].dirty)">
+            This field is required</li>
+        </ul>
       </div>
 
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions"  value="option1">
+        <input class="form-check-input" type="radio" name="radio"
+          value="male" formControlName="radio">
         <label class="form-check-label" for="inlineRadio1">Male</label>
       </div>
       <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="inlineRadioOptions" value="option2">
+        <input class="form-check-input" type="radio" name="radio" formControlName="radio"
+         value="female">
         <label class="form-check-label" for="inlineRadio2">Female</label>
       </div>
 
-      <input type="submit" value="Register" class="btn btn-secondary btn-lg btn-block mt-3">
+      <input type="submit" [disabled]="!form.valid || !emailValid || !usernameValid"
+       value="Register" class="btn btn-secondary btn-lg btn-block mt-3">
     </form>
   </div>
 
