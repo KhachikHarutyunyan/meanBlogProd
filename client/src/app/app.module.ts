@@ -10,6 +10,7 @@ import { PostsComponent } from './components/posts/posts.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { RegisterComponent } from './components/auth/register/register.component
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
