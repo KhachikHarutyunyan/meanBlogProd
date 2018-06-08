@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { UserModule } from '../../../moduls/user.module';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -12,9 +13,18 @@ export class RegisterComponent implements OnInit {
 
   form: FormGroup;
 
+  messageClass: String;
+  message: String;
+  processing: Boolean = false;
+  emailMessage: String;
+  emailValid: Boolean;
+  usernameValid: Boolean;
+  usernameMessage: String;
+
   constructor(
     private formBuilder: FormBuilder,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) {
     this.createForm();
   }
@@ -51,13 +61,29 @@ export class RegisterComponent implements OnInit {
     }, { validator: this.matchingPass('password', 'confirm') });
   }
 
+  disableForm() {
+    this.form.controls['username'].disable();
+    this.form.controls['email'].disable();
+    this.form.controls['password'].disable();
+    this.form.controls['confirm'].disable();
+    this.form.controls['radio'].disable();
+  }
+
+  enableForm() {
+    this.form.controls['username'].enable();
+    this.form.controls['email'].enable();
+    this.form.controls['password'].enable();
+    this.form.controls['confirm'].enable();
+    this.form.controls['radio'].enable();
+  }
+
   usernameValidator(controls) {
     const regExp = new RegExp(/^[a-zA-Z0-9]+$/);
     if (regExp.test(controls.value)) {
       return null;
     } else {
       return {
-        'usernameValid': true
+        'usernameValidator': true
       };
     }
   }
@@ -69,7 +95,7 @@ export class RegisterComponent implements OnInit {
       return null;
     } else {
       return {
-        'emailValid': true
+        'emailValidator': true
       };
     }
   }
@@ -80,7 +106,7 @@ export class RegisterComponent implements OnInit {
       return null;
     } else {
       return {
-        'passwordValid': true
+        'passwordValidator': true
       };
     }
   }
@@ -98,6 +124,8 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
+    this.processing = true;
+    this.disableForm();
     const user: UserModule = {
       username: this.form.get('username').value,
       email: this.form.get('email').value,
@@ -105,9 +133,50 @@ export class RegisterComponent implements OnInit {
       sex: this.form.get('radio').value
     };
     this.auth.registerUser(user).subscribe(data => {
-      console.log(data);
+      if (!data['success']) {
+        this.messageClass = 'alert alert-danger';
+        this.message = data['message'];
+        this.processing = false;
+        this.enableForm();
+      } else {
+        this.messageClass = 'alert alert-success';
+        this.message = data['message'];
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 800);
+      }
     });
-    console.log(user);
+  }
+
+  checkEmail() {
+    // const email = this.form.get('email').value;
+    if (this.form.get('email').value) {
+      this.auth.checkEmail(this.form.get('email').value).subscribe(data => {
+        if (!data['success']) {
+          this.emailValid = false;
+          this.emailMessage = data['message'];
+        } else {
+          this.emailValid = true;
+          this.emailMessage = data['message'];
+        }
+      });
+    }
+  }
+
+
+  checkUsername() {
+    // const email = this.form.get('email').value;
+    if (this.form.get('username').value && this.form.get('username').value.length > 2) {
+      this.auth.checkUsername(this.form.get('username').value).subscribe(data => {
+        if (!data['success']) {
+          this.usernameValid = false;
+          this.usernameMessage = data['message'];
+        } else {
+          this.usernameValid = true;
+          this.usernameMessage = data['message'];
+        }
+      });
+    }
   }
 
 }

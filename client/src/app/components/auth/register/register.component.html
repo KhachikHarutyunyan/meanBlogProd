@@ -1,14 +1,20 @@
 
   <div class="col-md-6 offset-md-3 mt-5 mb-5 p-4 form-styles">
 
+    <div class="show-hide-message">
+      <div [ngClass]="messageClass">
+        {{ message }}
+      </div>
+    </div>
+
     <form [formGroup]="form" (submit)="register()">
       <h3 class="text-center mb-3">Register new Accaunt</h3>
       <div class="form-group">
         <label for="username">User name</label>
-        <input type="text" class="form-control" name="username" placeholder="*User name"
+        <input type="text" class="form-control" name="username" placeholder="*User name" (blur)="checkUsername()"
          formControlName="username"
          [ngClass]="{ 'is-invalid': (form.controls['username'].errors && form.controls['username'].dirty) ||
-          (usernameValid && form.controls['username'].dirty) }">
+          (!usernameValid && form.controls['username'].dirty) }">
 
         <ul>
           <li *ngIf="(form.controls['username'].errors?.minlength && form.controls['username'].dirty) ||
@@ -16,16 +22,18 @@
             Minimum characters: 2, Maximum characters: 30 </li>
           <li *ngIf="(form.controls['username'].errors?.required && form.controls['username'].dirty)">
             This field is required</li>
-          <li *ngIf="(form.controls['username'].errors?.usernameValid && form.controls['username'].dirty)">
+          <li *ngIf="(form.controls['username'].errors?.usernameValidator && form.controls['username'].dirty)">
             Username must not have any special characters</li>
+          <li *ngIf="usernameMessage"
+           [ngStyle]="{'color': usernameValid ? 'green': 'red'}">{{ usernameMessage }}</li>
         </ul>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" name="email" placeholder="*E-mail"
+        <input type="email" class="form-control" name="email" placeholder="*E-mail" (blur)="checkEmail()"
          formControlName="email"
          [ngClass]="{ 'is-invalid': (form.controls['email'].errors && form.controls['email'].dirty) ||
-          (emailValid && form.controls['email'].dirty) }">
+          (!emailValid && form.controls['email'].dirty) }">
 
          <ul>
           <li *ngIf="(form.controls['email'].errors?.minlength && form.controls['email'].dirty) ||
@@ -33,8 +41,10 @@
             Minimum characters: 6, Maximum characters: 35 </li>
           <li *ngIf="(form.controls['email'].errors?.required && form.controls['email'].dirty)">
             This field is required</li>
-          <li *ngIf="(form.controls['email'].errors?.emailValid && form.controls['email'].dirty)">
+          <li *ngIf="(form.controls['email'].errors?.emailValidator && form.controls['email'].dirty)">
             This must be a valid e-mail</li>
+          <li *ngIf="emailMessage"
+          [ngStyle]="{'color': emailValid ? 'green': 'red'}">{{ emailMessage }}</li>
         </ul>
 
       </div>
@@ -42,8 +52,7 @@
         <label for="password">Password</label>
         <input type="password" class="form-control" name="password" placeholder="*Password"
          formControlName="password"
-         [ngClass]="{ 'is-invalid': (form.controls['password'].errors && form.controls['password'].dirty) ||
-         (!passwordValidator && form.controls['password'].dirty) }">
+         [ngClass]="{ 'is-invalid': (form.controls['password'].errors && form.controls['password'].dirty)}">
 
          <ul>
           <li *ngIf="(form.controls['password'].errors?.minlength && form.controls['password'].dirty) ||
@@ -51,7 +60,7 @@
             Minimum characters: 6, Maximum characters: 35 </li>
           <li *ngIf="(form.controls['password'].errors?.required && form.controls['password'].dirty)">
             This field is required</li>
-          <li *ngIf="(form.controls['password'].errors?.passwordValid && form.controls['password'].dirty)">
+          <li *ngIf="(form.controls['password'].errors?.passwordValidator && form.controls['password'].dirty)">
             Password must be at least 8 characters but no more than 35,
              have numbers,spacial characters, capital & small letters!
           </li>
@@ -81,7 +90,7 @@
         <label class="form-check-label" for="inlineRadio2">Female</label>
       </div>
 
-      <input type="submit" [disabled]="!form.valid"
+      <input type="submit" [disabled]="!form.valid || processing || !emailValid || !usernameValid"
        value="Register" class="btn btn-secondary btn-lg btn-block mt-3">
     </form>
   </div>

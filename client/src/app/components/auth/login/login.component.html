@@ -1,3 +1,37 @@
-<p>
-  login works!
-</p>
+<div class="col-md-6 offset-md-3 mt-5 mb-5 p-4 form-styles">
+
+    <div class="show-hide-message">
+      <div [ngClass]="messageClass">
+        {{ message }}
+      </div>
+    </div>
+
+    <form [formGroup]="form" (submit)="login()">
+      <h3 class="text-center mb-3">Login</h3>
+      <div class="form-group">
+        <label for="username">User name</label>
+        <input type="text" class="form-control" name="username" placeholder="*User name"
+         formControlName="username"
+         [ngClass]="{ 'is-invalid': form.controls['username'].errors && form.controls['username'].dirty}">
+
+        <ul>
+          <li *ngIf="form.controls['username'].errors?.required && form.controls['username'].dirty">
+            This field is required</li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" placeholder="*Password"
+         formControlName="password"
+         [ngClass]="{ 'is-invalid': form.controls['password'].errors && form.controls['password'].dirty}">
+
+         <ul>
+          <li *ngIf="form.controls['password'].errors?.required && form.controls['password'].dirty">
+            This field is required</li>
+        </ul>
+      </div>
+
+      <input type="submit" [disabled]="!form.valid || processing"
+       value="Login" class="btn btn-secondary btn-sm btn-block mt-5">
+    </form>
+  </div>
