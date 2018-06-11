@@ -1,23 +1,22 @@
-<div class="row  mt-5">
-    <div class="col-md-4">
+<div class="row mt-5">
+    <div class="col-md-4 mb-3">
       <div class="card border-dark" >
-        <img class="card-img-top avatar" [src]="defoultAvatar" alt="Avatar">
+        <img class="card-img-top avatar"
+         [src]="!!(sex === 'male')? '../../../../assets/svg-tour/man.svg': '../../../../assets/svg-tour/girl.svg'"
+         alt="Avatar" *ngIf="!!(sex === 'male')">
+
         <hr>
         <img src="../../../../assets/svg-tour/picture.svg" alt="Add Picture" class="add-picture">
         <div class="card-body">
-          <h5 class="card-title">About me</h5>
-          <p class="card-text">Write about you</p>
-            <ul class="list-group">
-                <li class="list-group-item">Username: {{ username }}</li>
-                <li class="list-group-item">Email: {{ email }}</li>
-                <!-- <li class="list-group-item">Email: {{ user.sex }}</li> -->
-              </ul>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <ul class="list-group">
+            <li class="list-group-item">Username: {{ username }}</li>
+            <li class="list-group-item">Email: {{ email }}</li>
+          </ul>
         </div>
       </div>
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-8 account-info">
       <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
         Repudiandae reiciendis reprehenderit eius modi officiis in,
          molestias recusandae, similique laudantium dolorum temporibus provident fugiat ipsam facilis nulla,

@@ -8,10 +8,9 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class ProfileComponent implements OnInit {
 
-  user;
   username: String;
   email: String;
-  defoultAvatar: String;
+  sex: String;
 
   constructor(
     private auth: AuthService
@@ -19,15 +18,9 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.auth.getProfile().subscribe(profile => {
-      this.user = profile['user'];
-      // this.username = profile['user']['username'];
-      this.username = this.user['username'];
-      this.email = this.user['email'];
-      if (this.user.sex === 'male') {
-        this.defoultAvatar = '../../../../assets/svg-tour/man.svg';
-      } else {
-        this.defoultAvatar = '../../../../assets/svg-tour/girl.svg';
-      }
+      this.username = profile['user']['username'];
+      this.email = profile['user']['email'];
+      this.sex = profile['user']['sex'];
     });
   }
 

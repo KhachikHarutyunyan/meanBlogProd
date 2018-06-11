@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserModule } from '../moduls/user.module';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class AuthService {
   options;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private jwtHelperService: JwtHelperService
   ) { }
 
   createAuthHeaders() {
@@ -64,6 +66,15 @@ export class AuthService {
   getProfile() {
     this.createAuthHeaders();
     return this.http.get(this.domain + '/authentication/profile', this.options);
+  }
+
+  loggedIn() {
+    const token: string = this.jwtHelperService.tokenGetter();
+    if (!token) {
+      return false;
+    }
+    const tokenExpired: boolean = this.jwtHelperService.isTokenExpired(token);
+    return !tokenExpired;
   }
 
 }

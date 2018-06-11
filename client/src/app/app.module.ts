@@ -13,6 +13,7 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { AuthService } from './services/auth.service';
 import { SystemComponent } from './components/system/system.component';
 import { ProfileComponent } from './components/system/profile/profile.component';
+import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,15 @@ import { ProfileComponent } from './components/system/profile/profile.component'
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('token');
+        },
+        whitelistedDomains: ['http://localhost8000']
+      }
+    })
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

@@ -9,10 +9,16 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
+  dropdown: Boolean = false;
+  username: String;
+  sex: String;
+
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     private router: Router
-  ) { }
+  ) {
+    if (this.auth.loggedIn()) { this.getUser(); }
+  }
 
   ngOnInit() {
   }
@@ -20,6 +26,15 @@ export class NavbarComponent implements OnInit {
   onLogout() {
     this.auth.logOut();
     this.router.navigate(['/']);
+  }
+
+  getUser() {
+    if (this.auth.loggedIn()) {
+      this.auth.getProfile().subscribe(profile => {
+        this.username = profile['user']['username'];
+        this.sex = profile['user']['sex'];
+      });
+    }
   }
 
 }
