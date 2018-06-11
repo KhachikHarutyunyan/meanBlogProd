@@ -14,6 +14,8 @@ import { AuthService } from './services/auth.service';
 import { SystemComponent } from './components/system/system.component';
 import { ProfileComponent } from './components/system/profile/profile.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { ClickOutsideDirective } from './click-outside.directive';
+import { DropdownComponent } from './components/navbar/dropdown/dropdown.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { JwtModule } from '@auth0/angular-jwt';
     LoginComponent,
     RegisterComponent,
     SystemComponent,
-    ProfileComponent
+    ProfileComponent,
+    ClickOutsideDirective,
+    DropdownComponent
   ],
   imports: [
     BrowserModule,

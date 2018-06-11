@@ -1,0 +1,24 @@
+<div class="dropdown" *ngIf="auth.loggedIn()">
+  <div (click)="dropdown = !dropdown" appClickOutside><img src="../../../assets/svg-tour/down-arrow.svg" alt=""
+    class="arrow"></div>
+
+  <div class="dropdown-content" [ngStyle]="{ 'display': dropdown? 'block': 'none' }">
+    <div class="small-menu">
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="/" >Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/posts">Posts</a>
+      </li>
+    </div>
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="/system/profile">Profile</a>
+    </li>
+    <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link" routerLink="/">My Posts</a>
+    </li>
+    <li class="nav-item" routerLinkActive="active">
+      <a class="nav-link" routerLink="/posts" *ngIf="auth.loggedIn()">Add new Post</a>
+    </li>
+  </div>
+</div>
