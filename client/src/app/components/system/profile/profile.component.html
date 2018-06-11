@@ -2,8 +2,8 @@
     <div class="col-md-4 mb-3">
       <div class="card border-dark" >
         <img class="card-img-top avatar"
-         [src]="!!(sex === 'male')? '../../../../assets/svg-tour/man.svg': '../../../../assets/svg-tour/girl.svg'"
-         alt="Avatar" *ngIf="!!(sex === 'male')">
+         [src]="!(sex === 'male') ? '../../../../assets/svg-tour/girl.svg': '../../../../assets/svg-tour/man.svg'"
+         alt="Avatar">
 
         <hr>
         <img src="../../../../assets/svg-tour/picture.svg" alt="Add Picture" class="add-picture">
