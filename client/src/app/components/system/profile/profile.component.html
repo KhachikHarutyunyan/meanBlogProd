@@ -1,9 +1,21 @@
+<div *ngIf="loader">
+  loading....
+</div>
+
 <div class="row mt-5">
+
     <div class="col-md-4 mb-3">
       <div class="card border-dark" >
-        <img class="card-img-top avatar"
-         [src]="!(sex === 'male') ? '../../../../assets/svg-tour/girl.svg': '../../../../assets/svg-tour/man.svg'"
-         alt="Avatar">
+        <div *ngIf="sex" class="avatar-block">
+          <img class="card-img-top avatar" *ngIf="avatar"
+          src="../../../../assets/svg-tour/man.svg"
+          alt="Avatar">
+
+          <img class="card-img-top avatar" *ngIf="!avatar"
+          src="../../../../assets/svg-tour/girl.svg"
+          alt="Avatar">
+        </div>
+
 
         <hr>
         <img src="../../../../assets/svg-tour/picture.svg" alt="Add Picture" class="add-picture">
@@ -15,6 +27,7 @@
         </div>
       </div>
     </div>
+
 
     <div class="col-md-8 account-info">
       <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.

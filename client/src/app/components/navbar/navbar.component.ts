@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { ClickOutsideDirective } from '../../click-outside.directive';
@@ -8,8 +8,9 @@ import { ClickOutsideDirective } from '../../click-outside.directive';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit, DoCheck {
+export class NavbarComponent implements OnInit {
 
+  dropdown: Boolean = false;
   username: String;
   sex: String;
 
@@ -17,16 +18,15 @@ export class NavbarComponent implements OnInit, DoCheck {
     public auth: AuthService,
     private router: Router
   ) {
-
+    if (this.auth.loggedIn()) { this.getUser(); }
+    auth.getUserName.subscribe(name => this.changeName(name));
   }
 
   ngOnInit() {
   }
 
-  ngDoCheck() {
-    if (this.auth.loggedIn()) {
-      this.getUser();
-    }
+  changeName(name) {
+    this.username = name;
   }
 
   onLogout() {
@@ -37,7 +37,7 @@ export class NavbarComponent implements OnInit, DoCheck {
   getUser() {
     if (this.auth.loggedIn()) {
       this.auth.getProfile().subscribe(profile => {
-        this.username = profile['user']['username'];
+        // this.username = profile['user']['username'];
         this.sex = profile['user']['sex'];
       });
     }

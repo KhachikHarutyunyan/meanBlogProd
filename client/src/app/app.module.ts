@@ -40,7 +40,7 @@ import { DropdownComponent } from './components/navbar/dropdown/dropdown.compone
         tokenGetter: () => {
           return localStorage.getItem('token');
         },
-        whitelistedDomains: ['http://localhost8000']
+        whitelistedDomains: ['http://localhost:8000']
       }
     })
   ],

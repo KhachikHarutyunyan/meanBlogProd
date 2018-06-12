@@ -1,12 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserModule } from '../moduls/user.module';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  @Output() getUserName: EventEmitter<any> = new EventEmitter();
 
   domain = 'http://localhost:8000';
   token: String;
@@ -47,6 +50,7 @@ export class AuthService {
   }
 
   login(user) {
+    this.getUserName.emit(user.username);
     return this.http.post(this.domain + '/authentication/login', user);
   }
 
@@ -63,7 +67,7 @@ export class AuthService {
     this.user = user;
   }
 
-  getProfile() {
+  getProfile(): Observable<Object> {
     this.createAuthHeaders();
     return this.http.get(this.domain + '/authentication/profile', this.options);
   }

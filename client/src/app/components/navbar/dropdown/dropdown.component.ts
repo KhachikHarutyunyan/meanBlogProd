@@ -9,7 +9,6 @@ import { AuthService } from '../../../services/auth.service';
 export class DropdownComponent implements OnInit {
 
   dropdown: Boolean = false;
-  text;
 
   constructor(
     public auth: AuthService,
@@ -17,10 +16,7 @@ export class DropdownComponent implements OnInit {
   ) { }
 
   @HostListener('document:click', ['$event']) clickout(event) {
-    if (this.eRef.nativeElement.contains(event.target)) {
-
-    } else {
-      this.text = 'click outside';
+    if (!this.eRef.nativeElement.contains(event.target)) {
       this.dropdown = false;
     }
   }
