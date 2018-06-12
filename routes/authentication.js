@@ -135,7 +135,7 @@ module.exports = (router) => {
                                     success: true,
                                     message: 'Success',
                                     token: token,
-                                    user: { username: user.username }
+                                    user: { username: user.username, sex: user.sex }
                                 });
                             }
                         }

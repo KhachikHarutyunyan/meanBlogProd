@@ -13,16 +13,19 @@ export class NavbarComponent implements OnInit {
   dropdown: Boolean = false;
   username: String;
   sex: String;
+  avatar: Boolean = false;
 
   constructor(
     public auth: AuthService,
     private router: Router
   ) {
-    if (this.auth.loggedIn()) { this.getUser(); }
-    auth.getUserName.subscribe(name => this.changeName(name));
+
   }
 
   ngOnInit() {
+    // this.auth.getUserName.subscribe(name => this.changeName(name));
+      this.getUser();
+
   }
 
   changeName(name) {
@@ -32,13 +35,24 @@ export class NavbarComponent implements OnInit {
   onLogout() {
     this.auth.logOut();
     this.router.navigate(['/']);
+    this.username = '';
+    this.sex = '';
   }
 
   getUser() {
     if (this.auth.loggedIn()) {
       this.auth.getProfile().subscribe(profile => {
-        // this.username = profile['user']['username'];
-        this.sex = profile['user']['sex'];
+        if (profile['success']) {
+          this.username = profile['user']['username'];
+          this.sex = profile['user']['sex'];
+
+          if (this.sex === 'male') {
+            this.avatar = true;
+          } else {
+            this.avatar = false;
+          }
+        }
+
       });
     }
   }

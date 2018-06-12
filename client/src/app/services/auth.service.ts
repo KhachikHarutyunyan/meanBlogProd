@@ -9,7 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  @Output() getUserName: EventEmitter<any> = new EventEmitter();
+  // @Output() getUserName: EventEmitter<any> = new EventEmitter();
+  getUserName: any;
 
   domain = 'http://localhost:8000';
   token: String;
@@ -50,7 +51,6 @@ export class AuthService {
   }
 
   login(user) {
-    this.getUserName.emit(user.username);
     return this.http.post(this.domain + '/authentication/login', user);
   }
 

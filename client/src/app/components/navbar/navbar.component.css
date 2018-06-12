@@ -1,6 +1,5 @@
 .navbar a {
   color: #b54141;
-  /* color: #b54141; */
   font-size: 18px;
   font-weight: bold;
 }
@@ -36,35 +35,8 @@ a.navbar-brand {
   width: 26px;
   margin: 0 7px;
 }
-
-.dropdown {
-  position: relative;
+.account a div {
   display: inline-block;
-}
-
-.arrow {
-  width: 20px;
-  position: relative;
-  top: 9px;
-  right: 6px;
-  cursor: pointer;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  top: 52px;
-  right: 0;
-  background-color: #343a40;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
 }
 
 .small-menu {
@@ -97,5 +69,14 @@ a.navbar-brand {
   .logout-pos {
     position: absolute;
     right: 10px;
+  }
+
+  .navbar-expand .navbar-nav .nav-link {
+    padding-right: 6px;
+    padding-left: 6px;
+  }
+  .navbar a {
+    font-size: 16px;
+    font-weight: bold;
   }
 }

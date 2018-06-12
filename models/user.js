@@ -121,7 +121,7 @@ userSchema.pre('save', function (next) {
 });
 
 userSchema.methods.comparePassword = function(password) {
-    return bcrypt.compareSync(password, this.password);//return true or false if passwords is equal on db on client
+    return bcrypt.compareSync(password, this.password);//return true or false if passwords is equal on db and client
 };
 
 module.exports = mongoose.model('User', userSchema);

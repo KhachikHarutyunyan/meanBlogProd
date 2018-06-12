@@ -61,26 +61,8 @@ a.navbar-brand {
   .small-menu {
     display: block;
   }
-  .hidden-m {
-    display: none;
-  }
 
-  .account-header {
-    /* display: flex;
-    justify-content: center; */
-  }
-
-  .account {
-    margin-left: 5%;
-
-  }
-
-  .account img {
-    margin: 0 4px;
-  }
-
-  .logout-pos {
-    position: absolute;
-    right: 10px;
+  .dropdown-content a {
+    padding: 6px 16px;
   }
 }
