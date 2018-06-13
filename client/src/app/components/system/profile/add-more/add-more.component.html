@@ -1,0 +1,9 @@
+<form [formGroup]="form">
+  <label>About me</label>
+  <textarea class="form-control" formControlName="about" name="about" placeholder="About me"></textarea>
+  <label>Ocupation</label>
+  <input type="text" class="form-control" formControlName="ocupation" name="ocupation" placeholder="Ocupation">
+  <label>Birthday</label>
+  <my-date-picker placeholder="Select a date" name="mydate" [options]="myDatePickerOptions"
+                    formControlName="myDate"></my-date-picker>
+</form>

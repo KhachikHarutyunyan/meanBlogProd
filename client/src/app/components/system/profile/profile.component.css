@@ -1,3 +1,8 @@
+.aside-avatar ul li span {
+  color: #b54141;
+  font-size: 16px;
+}
+
 .avatar-block {
   height: 190px;
   text-align: center;
@@ -18,4 +23,52 @@
 
 .account-info {
   background-color: #fff;
+  border: 1px solid #343a40;
+  border-radius: 5px;
+}
+
+.account-info h3 {
+  font-size: 22px;
+  color: grey;
+}
+.account-title {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  margin: 16px 0;
+  border-bottom: 1px solid #f1dcdc;
+}
+.account-title h3>span {
+  color: #b54141;
+  margin-left: 10px;
+}
+
+.skills td {
+  padding: 15px 0;
+}
+
+.skills .icon {
+  width: 50px;
+}
+
+.skills .icon img {
+  width: 20px;
+}
+
+.skills td.item {
+  width: 200px;
+  color: grey;
+}
+.skills td.info {
+  border-bottom: 1px solid #f1dcdc;
+}
+.skills td span {
+  color: #b54141;
+}
+
+
+@media (max-width: 768px) {
+  .aside-avatar {
+    margin-bottom: 25px;
+  }
 }

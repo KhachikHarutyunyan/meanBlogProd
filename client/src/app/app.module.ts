@@ -16,6 +16,10 @@ import { ProfileComponent } from './components/system/profile/profile.component'
 import { JwtModule } from '@auth0/angular-jwt';
 import { ClickOutsideDirective } from './click-outside.directive';
 import { DropdownComponent } from './components/navbar/dropdown/dropdown.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { AddMoreComponent } from './components/system/profile/add-more/add-more.component';
+import { TableComponent } from './components/system/profile/table/table.component';
+import { MyDatePickerModule } from 'mydatepicker';
 
 @NgModule({
   declarations: [
@@ -28,13 +32,17 @@ import { DropdownComponent } from './components/navbar/dropdown/dropdown.compone
     SystemComponent,
     ProfileComponent,
     ClickOutsideDirective,
-    DropdownComponent
+    DropdownComponent,
+    AddMoreComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
+    MyDatePickerModule,
+    NgxSpinnerModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

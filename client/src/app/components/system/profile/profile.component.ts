@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -17,13 +19,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
   avatar: Boolean;
   loader: Boolean = false;
 
+  displayTable: Boolean = true;
+
   constructor(
-    private auth: AuthService
+    private auth: AuthService,
+    private spinner: NgxSpinnerService,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
+    this.spinner.show();
     this.sub1 = this.auth.getProfile().subscribe(profile => {
+
       if (profile['success']) {
         this.username = profile['user']['username'];
         this.email = profile['user']['email'];
@@ -33,8 +41,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         } else {
           this.avatar = false;
         }
-        this.loader = false;
-      } else {
+        this.spinner.hide();
         this.loader = true;
       }
     });
@@ -42,6 +49,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub1.unsubscribe();
+  }
+
+  goToAddMore() {
+    this.displayTable = false;
+    this.router.navigate(['/system/profile/add-more']);
   }
 
 }

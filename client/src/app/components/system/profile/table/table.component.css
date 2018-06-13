@@ -1,0 +1,26 @@
+.skills td {
+  padding: 15px 0;
+}
+
+.skills .icon {
+  width: 50px;
+}
+
+.skills .icon img {
+  width: 20px;
+}
+
+.skills td.item {
+  width: 200px;
+  color: grey;
+}
+.skills td.info {
+  border-bottom: 1px solid #f1dcdc;
+}
+.skills td span {
+  color: #b54141;
+}
+
+
+@media (max-width: 768px) {
+}

@@ -1,11 +1,9 @@
-<div *ngIf="loader">
-  loading....
-</div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff"
+ loadingText="Loading..." type="ball-scale-multiple"></ngx-spinner>
+<div class="row mt-5 mb-5 " *ngIf="loader" >
 
-<div class="row mt-5">
-
-    <div class="col-md-4 mb-3">
-      <div class="card border-dark" >
+    <div class="col-md-4 aside-avatar">
+      <div class="card border-dark h-100" >
         <div *ngIf="sex" class="avatar-block">
           <img class="card-img-top avatar" *ngIf="avatar"
           src="../../../../assets/svg-tour/man.svg"
@@ -20,9 +18,15 @@
         <hr>
         <img src="../../../../assets/svg-tour/picture.svg" alt="Add Picture" class="add-picture">
         <div class="card-body">
-          <ul class="list-group">
-            <li class="list-group-item">Username: {{ username }}</li>
-            <li class="list-group-item">Email: {{ email }}</li>
+          <ul class="list-group ">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Username:
+              <span class="badge badge-pill">{{ username }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Email:
+              <span class="badge badge-pill">{{ email }}</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -30,10 +34,61 @@
 
 
     <div class="col-md-8 account-info">
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-        Repudiandae reiciendis reprehenderit eius modi officiis in,
-         molestias recusandae, similique laudantium dolorum temporibus provident fugiat ipsam facilis nulla,
-          odit iusto aspernatur natus!</p>
+      <div class="account-title">
+        <h3>Tell about yourself <span>{{ username }}</span></h3>
+        <button class="btn btn-dark btn-sm" (click)="goToAddMore()">Add More</button>
+      </div>
+
+      <router-outlet></router-outlet>
+
+
+      <!-- <table class="no-border no-strip skills">
+          <tbody class="no-border-x no-border-y">
+            <tr>
+              <td class="icon">
+                <img src="../../../../assets/svg-tour/businessman-talking-about-data-analysis.svg" alt="About">
+              </td>
+              <td class="item">About me</td>
+              <td class="info"><span>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Quisquam fuga optio eligendi sequi, consequatur hic.
+                  Repudiandae quasi excepturi consequatur doloribus cumque rem sunt.
+                  Nemo mollitia suscipit aliquam a, quidem aperiam!</span></td>
+            </tr>
+            <tr>
+              <td class="icon">
+                <img src="../../../../assets/svg-tour/man-in-office-desk-with-computer.svg" alt="Location">
+              </td>
+              <td class="item">Ocupation</td>
+              <td class="info"><span>Designer</span></td>
+            </tr>
+            <tr>
+              <td class="icon"><img src="../../../../assets/svg-tour/gift.svg" alt=""></td>
+              <td class="item">Birthday</td>
+              <td class="info"><span>Data</span></td>
+            </tr>
+            <tr>
+              <td class="icon"><img src="../../../../assets/svg-tour/phone-book.svg" alt=""></td>
+              <td class="item">Mobile</td>
+              <td class="info"> <span>(999) 999-9999</span></td>
+            </tr>
+            <tr>
+              <td class="icon"><img src="../../../../assets/svg-tour/pin.svg" alt=""></td>
+              <td class="item">Location</td>
+              <td><span>Montreal, Canada</span></td>
+            </tr>
+            <tr>
+              <td class="icon"><img src="../../../../assets/svg-tour/post-it.svg" alt=""></td>
+              <td class="item">Posts</td>
+              <td class="info"><span>12</span></td>
+            </tr>
+          </tbody>
+        </table> -->
+
+
+      <!-- <ul class="list-group">
+        <input type="text" class="form-control">
+        <li class="list-group-item">default</li>
+      </ul> -->
     </div>
 </div>
 
