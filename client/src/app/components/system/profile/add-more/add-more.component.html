@@ -1,9 +1,47 @@
-<form [formGroup]="form">
+<form [formGroup]="form" class="mb-3" (ngSubmit)="sendUserInfo()">
   <label>About me</label>
   <textarea class="form-control" formControlName="about" name="about" placeholder="About me"></textarea>
+  <div>
+    <p *ngIf="(form.controls['about'].errors?.minlength && form.controls['about'].dirty) ||
+      (form.controls['about'].errors?.maxlength && form.controls['about'].dirty)">
+      Minimum characters: 5, Maximum characters: 200
+    </p>
+  </div>
   <label>Ocupation</label>
   <input type="text" class="form-control" formControlName="ocupation" name="ocupation" placeholder="Ocupation">
+  <div>
+    <p *ngIf="(form.controls['ocupation'].errors?.minlength && form.controls['ocupation'].dirty) ||
+      (form.controls['ocupation'].errors?.maxlength && form.controls['ocupation'].dirty)">
+      Minimum characters: 3, Maximum characters: 50
+    </p>
+  </div>
   <label>Birthday</label>
   <my-date-picker placeholder="Select a date" name="mydate" [options]="myDatePickerOptions"
                     formControlName="myDate"></my-date-picker>
+
+  <label>Mobile</label>
+  <input type="text" class="form-control" formControlName="mobile" name="mobile" placeholder="Mobile">
+  <div>
+    <p *ngIf="(form.controls['mobile'].errors?.minlength && form.controls['mobile'].dirty) ||
+      (form.controls['mobile'].errors?.maxlength && form.controls['mobile'].dirty)">
+      Minimum characters: 8, Maximum characters: 20
+    </p>
+    <p *ngIf="(form.controls['mobile'].errors?.phoneValid && form.controls['mobile'].dirty)">
+      Phone is incorrect!
+    </p>
+  </div>
+  <label>Location</label>
+  <input type="text" class="form-control" formControlName="location" name="location" placeholder="Location">
+  <div>
+    <p *ngIf="(form.controls['location'].errors?.minlength && form.controls['location'].dirty) ||
+      (form.controls['location'].errors?.maxlength && form.controls['location'].dirty)">
+      Minimum characters: 3, Maximum characters: 80
+    </p>
+  </div>
+  <div class="form-bottom" style="display: flex; justify-content: space-between">
+    <a routerLink="/system/profile">Go Back</a>
+    <input type="submit" [disabled]="!form.valid" class="btn btn-dark mt-3" value="Send">
+  </div>
+
+
 </form>

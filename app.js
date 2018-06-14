@@ -8,6 +8,7 @@ const app = express();
 const path = require('path');
 const config = require('./config/database');
 const authentication = require('./routes/authentication')(router);
+const userInfo = require('./routes/user-info')(router);
 
 const port = 8000;
 
@@ -29,6 +30,7 @@ app.use(express.static(__dirname + '/client/dist/client/'));
 
 app.use('/authentication', authentication);
 
+app.use('/user-info', userInfo);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/dist/client/index.html'));
