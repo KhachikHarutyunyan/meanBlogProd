@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { ClickOutsideDirective } from '../../click-outside.directive';
 
 @Component({
   selector: 'app-navbar',
@@ -23,7 +22,6 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.auth.getUserName.subscribe(name => this.changeName(name));
       this.getUser();
 
   }

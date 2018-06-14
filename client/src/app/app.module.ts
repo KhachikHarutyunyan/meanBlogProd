@@ -1,3 +1,4 @@
+import { NotAuthService } from './services/not-auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,12 +15,12 @@ import { AuthService } from './services/auth.service';
 import { SystemComponent } from './components/system/system.component';
 import { ProfileComponent } from './components/system/profile/profile.component';
 import { JwtModule } from '@auth0/angular-jwt';
-import { ClickOutsideDirective } from './click-outside.directive';
 import { DropdownComponent } from './components/navbar/dropdown/dropdown.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AddMoreComponent } from './components/system/profile/add-more/add-more.component';
 import { TableComponent } from './components/system/profile/table/table.component';
 import { MyDatePickerModule } from 'mydatepicker';
+import { AuthGuardService } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,6 @@ import { MyDatePickerModule } from 'mydatepicker';
     RegisterComponent,
     SystemComponent,
     ProfileComponent,
-    ClickOutsideDirective,
     DropdownComponent,
     AddMoreComponent,
     TableComponent
@@ -52,7 +52,7 @@ import { MyDatePickerModule } from 'mydatepicker';
       }
     })
   ],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuardService, NotAuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

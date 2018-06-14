@@ -1,3 +1,5 @@
+import { NotAuthService } from './services/not-auth.service';
+import { AuthGuardService } from './services/auth-guard.service';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
@@ -12,9 +14,9 @@ import { TableComponent } from './components/system/profile/table/table.componen
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'posts', component: PostsComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'system', component: SystemComponent, children: [
+  { path: 'login', component: LoginComponent, canActivate: [NotAuthService] },
+  { path: 'register', component: RegisterComponent, canActivate: [NotAuthService] },
+  { path: 'system', component: SystemComponent, canActivate: [AuthGuardService], children: [
     { path: 'profile', component: ProfileComponent, children: [
       { path: '', component: TableComponent },
       { path: 'add-more', component: AddMoreComponent }
