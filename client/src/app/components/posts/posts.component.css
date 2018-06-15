@@ -1,0 +1,17 @@
+.reload-blk {
+  position: absolute;
+  top: 100px;
+  left: 20px;
+}
+
+.reload-btn {
+  position: fixed;
+  z-index: 555;
+}
+.reload-btn img {
+  width: 28px;
+}
+.btn-success {
+  background-color: #88c057;
+  border-color: #88c057;
+}

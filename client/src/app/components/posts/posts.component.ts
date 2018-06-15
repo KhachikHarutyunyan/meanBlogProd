@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PostsComponent implements OnInit {
 
+  messageClass: String;
+  message: String;
+
   constructor() { }
 
   ngOnInit() {

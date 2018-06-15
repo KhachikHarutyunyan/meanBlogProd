@@ -1,0 +1,18 @@
+.post-form {
+  background-color: #fff;
+  padding: 30px;
+  border: 1px solid #343a40;
+  border-radius: 8px;
+}
+
+.custom-file-label::after {
+  background-color: #343a40;
+  color: #b54141;
+}
+
+.custom-file-input {
+}
+
+.send-btn {
+  color: #b54141;
+}

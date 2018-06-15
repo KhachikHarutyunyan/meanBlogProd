@@ -10,6 +10,7 @@ import { SystemComponent } from './components/system/system.component';
 import { ProfileComponent } from './components/system/profile/profile.component';
 import { AddMoreComponent } from './components/system/profile/add-more/add-more.component';
 import { TableComponent } from './components/system/profile/table/table.component';
+import { NewPostComponent } from './components/system/new-post/new-post.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,7 +21,8 @@ const routes: Routes = [
     { path: 'profile', component: ProfileComponent, children: [
       { path: '', component: TableComponent },
       { path: 'add-more', component: AddMoreComponent }
-    ] }
+    ] },
+    { path: 'new-post', component: NewPostComponent }
    ] },
   { path: '**', component: HomeComponent }
 ];

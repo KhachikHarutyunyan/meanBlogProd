@@ -21,6 +21,7 @@ import { AddMoreComponent } from './components/system/profile/add-more/add-more.
 import { TableComponent } from './components/system/profile/table/table.component';
 import { MyDatePickerModule } from 'mydatepicker';
 import { AuthGuardService } from './services/auth-guard.service';
+import { NewPostComponent } from './components/system/new-post/new-post.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AuthGuardService } from './services/auth-guard.service';
     ProfileComponent,
     DropdownComponent,
     AddMoreComponent,
-    TableComponent
+    TableComponent,
+    NewPostComponent
   ],
   imports: [
     BrowserModule,

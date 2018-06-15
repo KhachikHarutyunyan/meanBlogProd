@@ -1,0 +1,31 @@
+<div class="col-md-8 offset-md-2 mb-5 mt-5 post-form">
+  <form [formGroup]="form" (submit)="createPost()">
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" name="file" formControlName="file"
+        placeholder="Upload image" (change)="uploadImg($event.target.files)" accept="image/png, image/jpeg">
+      <label class="custom-file-label">{{ uploadedText }}</label>
+    </div>
+
+    <label>Post Title</label>
+    <input type="text" class="form-control" name="title" formControlName="title">
+
+    <label>Post Body</label>
+    <textarea  class="form-control mb-3" name="body" formControlName="body"></textarea>
+
+    <input type="submit" class="btn btn-dark send-btn"
+    [disabled]="form.controls['file'].value == ''" value="LoadPost">
+
+  </form>
+</div>
+<div class="col-md-8 offset-md-2">
+  <div class="card mb-3">
+    <!-- <img class="card-img-top" src="https://i.ytimg.com/vi/L3V7LKYPIUQ/maxresdefault.jpg" alt="Card image cap"> -->
+    <img class="card-img-top" [src]="imgUrl" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+  </div>
+</div>
+
