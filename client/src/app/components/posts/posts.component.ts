@@ -39,4 +39,13 @@ export class PostsComponent implements OnInit {
     }, 2000);
   }
 
+  onComments() {
+    if (this.auth.loggedIn()) {
+      this.router.navigate(['/']);
+    } else {
+      this.messageClass = 'alert alert-danger';
+      this.message = 'You must be registered!';
+    }
+  }
+
 }

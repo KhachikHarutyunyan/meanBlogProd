@@ -19,20 +19,45 @@
           <img class="card-img-top" src="https://i.ytimg.com/vi/L3V7LKYPIUQ/maxresdefault.jpg" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text">This is a wider card with supporting text below as a natural
+              lead-in to additional content. This content is a little bit longer.</p>
             <div class="card-text">
-              <p><strong>Posted by: </strong>User</p>
-              <p><strong>Date: </strong>june 20, 2018</p>
-              <div>
-                <p><strong>Likes: </strong><img src="../../../assets/svg-tour/like.svg" style="width: 20px;" alt=""> 23</p>
+              <div class="post-info">
+                <p><strong>Posted by: </strong>User</p>
+                <p><strong>Date: </strong>june 20, 2018</p>
+
               </div>
-              <a href="#"><button type="button" class="btn btn-dark">Edit</button></a>
-              <a href="#" class="delete"><button type="button" class="btn btn-dark">Delete</button></a>
-              <p><small class="text-muted">3 comments</small></p>
+              <!-- post Infos -->
+              <div class="post-info">
+                <div class="dropdown">
+                  <p><strong>Likes: </strong>
+                    <img src="../../../assets/svg-tour/like.svg" alt="">
+                    4
+                  </p>
+                  <div class="dropdown-content">
+                    <a href="">dadi45</a>
+                    <a href="">Karla78</a>
+                    <a href="">tsddhaeee</a>
+                    <a href="">Aassw</a>
+                  </div>
+                </div> <!-- / dropdown -->
+                <p (click)="onComments()">
+                  <img src="../../../assets/svg-tour/chat.svg" alt="">
+                  12<strong class="text-muted"> comments</strong>
+                </p>
+              </div>
+              <!-- End post Infos -->
+              <div class="post-btns">
+                <a href="#"><button type="button" class="btn btn-dark ">Edit</button></a>
+                <a href="#" class="delete"><button type="button" class="btn btn-dark ">Delete</button></a>
+              </div>
+
             </div>
-          </div>
-        </div>
+          </div> <!-- / card-body -->
+        </div> <!-- / card -->
       </div>
+
+      <!-- Aside -->
       <div class="col-4 pl-0">
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi,
           hic architecto culpa possimus cum perspiciatis corporis numquam at rem.

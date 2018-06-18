@@ -22,3 +22,75 @@
 .delete .btn-dark {
   color: #b54141;
 }
+
+.post-btns {
+  display: flex;
+  justify-content: flex-end;
+}
+.post-btns a {
+  margin: 0 30px;
+  text-decoration: none;
+}
+
+.post-info {
+  border-bottom: 1px solid #cac0c0b9;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.post-info:first-child {
+  border-top: 1px solid #cac0c0b9;
+  padding-top: 10px;
+}
+.post-info p {
+  margin: 0 30px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.post-info img {
+  width: 18px;
+  margin: 0 3px;
+  line-height: 16px;
+}
+
+
+.card-text p {
+  color: #b54141;
+}
+.card-text p strong {
+  color: #8c8585;
+  font-size: 14px;
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 9999;
+  /* transition: all .5s ease-in-out; */
+}
+
+.dropdown-content a {
+  color: #b54141;
+  padding: 4px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+

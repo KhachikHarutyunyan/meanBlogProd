@@ -3,11 +3,12 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const passport = require('passport');
+// const passport = require('passport');
 const app = express();
 const path = require('path');
 const config = require('./config/database');
 const authentication = require('./routes/authentication')(router);
+const blogs = require('./routes/blog')(router);
 const userInfo = require('./routes/user-info')(router);
 
 const port = 8000;
@@ -29,6 +30,8 @@ app.use(cors({  origin: 'http://localhost:4200' }));
 app.use(express.static(__dirname + '/client/dist/client/'));
 
 app.use('/authentication', authentication);
+
+app.use('/blogs', blogs);
 
 app.use('/user-info', userInfo);
 
