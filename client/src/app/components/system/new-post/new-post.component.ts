@@ -15,6 +15,7 @@ export class NewPostComponent implements OnInit {
   imgUrl: String = '../../../../assets/img/default.jpg';
   fileToUpload: File = null;
   uploadedText: String = 'Upload Image';
+  fileState: String;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,26 +34,36 @@ export class NewPostComponent implements OnInit {
     reader.onload = (event: any) => {
       this.imgUrl = event.target.result;
     };
-    reader.readAsDataURL(this.fileToUpload);
+    if (this.fileToUpload) {
+      reader.readAsDataURL(this.fileToUpload);
+      this.fileState = 'valid-file';
+      this.uploadedText = 'File is uploaded';
+      console.log(this.fileToUpload);
+    } else {
+      this.fileState = 'invalid-file';
+      this.uploadedText = 'You must upload image!';
+    }
 
-    this.uploadedText = 'File is uploaded';
-    console.log(this.fileToUpload);
   }
 
   createForm() {
     this.form = this.formBuilder.group({
-      file: '',
+      file: ['', Validators.required],
       title: ['', Validators.compose([
-        Validators.required
+        Validators.required,
+        Validators.maxLength(50),
+        Validators.minLength(5)
       ])],
       body: ['', Validators.compose([
-        Validators.required
+        Validators.required,
+        Validators.minLength(35),
+        Validators.maxLength(1550)
       ])]
     });
   }
 
   createPost() {
-    console.log(this.form.controls.file.value);
+    console.log(this.form);
   }
 
 }

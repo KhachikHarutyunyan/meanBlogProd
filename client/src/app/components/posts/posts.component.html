@@ -1,10 +1,14 @@
-<div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff"
+ loadingText="Loading..." type="ball-scale-multiple"></ngx-spinner>
+
+<div *ngIf="loader">
 <!-- <div>
   <div [ngClass]="messageClass"> {{ message }} </div>
 </div> -->
 
 <div class="reload-blk">
-  <button class="btn btn-success reload-btn"><img src="../../../assets/svg-tour/refresh.svg" alt=""></button>
+  <button class="btn btn-success reload-btn" (click)="reloadBlogs()">
+    <img src="../../../assets/svg-tour/refresh.svg" alt=""></button>
 </div>
 
 
@@ -16,25 +20,18 @@
           <div class="card-body">
             <h5 class="card-title">Card title</h5>
             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            <div class="card-text">
+              <p><strong>Posted by: </strong>User</p>
+              <p><strong>Date: </strong>june 20, 2018</p>
+              <div>
+                <p><strong>Likes: </strong><img src="../../../assets/svg-tour/like.svg" style="width: 20px;" alt=""> 23</p>
+              </div>
+              <a href="#"><button type="button" class="btn btn-dark">Edit</button></a>
+              <a href="#" class="delete"><button type="button" class="btn btn-dark">Delete</button></a>
+              <p><small class="text-muted">3 comments</small></p>
+            </div>
           </div>
         </div>
-        <div class="card mb-3">
-            <img class="card-img-top" src="https://i.ytimg.com/vi/L3V7LKYPIUQ/maxresdefault.jpg" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-              <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-            </div>
-          </div>
-          <div class="card mb-3">
-              <img class="card-img-top" src="https://i.ytimg.com/vi/L3V7LKYPIUQ/maxresdefault.jpg" alt="Card image cap">
-              <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-              </div>
-            </div>
       </div>
       <div class="col-4 pl-0">
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi,

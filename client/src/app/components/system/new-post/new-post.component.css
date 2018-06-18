@@ -5,14 +5,32 @@
   border-radius: 8px;
 }
 
+.custom-file-label {
+  border: 1px solid #343a40;
+}
+
 .custom-file-label::after {
   background-color: #343a40;
   color: #b54141;
 }
-
-.custom-file-input {
+input[type="text"] {
+  border: 1px solid #343a40;
+}
+textarea {
+  border: 1px solid #343a40;
 }
 
+
 .send-btn {
+  color: #b54141;
+}
+.valid {
+  color: #b54141;
+}
+
+.valid-file {
+  color: #88c057;
+}
+.invalid-file {
   color: #b54141;
 }

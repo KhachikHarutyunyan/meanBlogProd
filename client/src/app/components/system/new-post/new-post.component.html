@@ -1,19 +1,43 @@
 <div class="col-md-8 offset-md-2 mb-5 mt-5 post-form">
   <form [formGroup]="form" (submit)="createPost()">
+    <h3>Create new Post</h3>
     <div class="custom-file">
       <input type="file" class="custom-file-input" name="file" formControlName="file"
         placeholder="Upload image" (change)="uploadImg($event.target.files)" accept="image/png, image/jpeg">
-      <label class="custom-file-label">{{ uploadedText }}</label>
+      <label class="custom-file-label" [ngClass]="fileState">{{ uploadedText }}</label>
+
+      <div class="valid" >
+        <p *ngIf="(form.controls['file'].value == '' && form.controls['file'].errors?.invalid)">File don't choose</p>
+      </div>
     </div>
 
     <label>Post Title</label>
     <input type="text" class="form-control" name="title" formControlName="title">
+    <div class="valid">
+      <p *ngIf="form.controls['title'].errors?.required && form.controls['title'].dirty">This field is required</p>
+      <p *ngIf="(form.controls['title'].errors?.minlength && form.controls['title'].dirty) ||
+        (form.controls['title'].errors?.maxlength && form.controls['title'].dirty)">
+        Minimum characters: 5, Maximum characters: 50
+      </p>
+    </div>
 
     <label>Post Body</label>
     <textarea  class="form-control mb-3" name="body" formControlName="body"></textarea>
+    <div class="valid">
+      <p *ngIf="form.controls['body'].errors?.required && form.controls['body'].dirty">
+        This field is required
+      </p>
+      <p *ngIf="form.controls['body'].errors?.minlength && form.controls['body'].dirty">
+         Minimum characters: 35
+      </p>
+      <p *ngIf="form.controls['body'].errors?.maxlength && form.controls['body'].dirty">
+        Maximum characters: 1550
+      </p>
+    </div>
 
     <input type="submit" class="btn btn-dark send-btn"
-    [disabled]="form.controls['file'].value == ''" value="LoadPost">
+    [disabled]="!form.valid || form.controls['file'].value == ''"
+     value="LoadPost">
 
   </form>
 </div>
