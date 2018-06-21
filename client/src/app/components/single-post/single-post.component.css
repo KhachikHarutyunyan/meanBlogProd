@@ -304,11 +304,11 @@
 }
 
 .comment.user-comment p{
-  background-color:  #f3f3f3;
+  background-color:  #c5c5c5;
 }
 
 .comment.author-comment p{
-  background-color:  #e2f8ff;
+  background-color:  #a0de6a;
   order: 1;
 }
 
@@ -319,7 +319,7 @@
   height: 15px;
   border-radius: 50%;
   background-color: #ffffff;
-  border: 2px solid #f3f3f3;
+  border: 2px solid #c5c5c5;
   left: -8px;
   top: 18px;
 }
@@ -331,7 +331,8 @@
   height: 15px;
   border-radius: 50%;
   background-color: #ffffff;
-  border: 2px solid #e2f8ff;
+  /* border: 2px solid #e2f8ff; */
+  border: 2px solid #a0de6a;
   right: -8px;
   top: 18px;
 }

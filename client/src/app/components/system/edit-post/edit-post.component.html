@@ -6,8 +6,8 @@
     </div>
 
 <div class="col-md-8 offset-md-2 mb-5 mt-5 post-form" *ngIf="!loading">
-    <form (submit)="editPost()">
-      <h3>Change <span> '{{post.title}}'</span> post</h3>
+    <form (submit)="editPost()" (ngForm)="form">
+      <h3>Change <span> '{{blogTitle}}'</span> post</h3>
       <div class="custom-file">
         <!-- <input type="file" class="custom-file-input" name="file" formControlName="file"
           placeholder="Upload image" (change)="uploadImg($event.target.files)" accept="image/png, image/jpeg">
@@ -22,14 +22,15 @@
       <input type="text" class="form-control" name="title" [(ngModel)]="post['title']">
 
       <label>Post Body</label>
-      <textarea  class="form-control mb-3" name="body" [(ngModel)]="post['body']"></textarea>
+      <textarea class="form-control mb-3" name="body" [(ngModel)]="post['body']"></textarea>
 
+      <div class="form-footer">
+        <button type="submit" class="btn btn-dark send-btn"
+         [disabled]="post['body'].length < 32 || post['title'].length < 5" >Save Changes</button>
 
-      <input type="submit" class="btn btn-dark btn-sm send-btn"
+        <button class="btn btn-dark go-back" type="button" (click)="goBack()">Go Back</button>
+      </div>
 
-        value="Save Changes">
-
-      <button class="btn btn-success" type="button" (click)="goBack()">Go Back</button>
 
 
 

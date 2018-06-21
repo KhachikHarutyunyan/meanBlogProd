@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BlogService } from '../../../services/blog.service';
@@ -13,11 +14,14 @@ import { Location } from '@angular/common';
 })
 export class EditPostComponent implements OnInit {
 
+  form: FormsModule;
+
   currentUrl: Object = { id: String };
   post: BlogModule;
   loading: Boolean;
   messageClass: String;
   message: String;
+  blogTitle: String;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -34,9 +38,11 @@ export class EditPostComponent implements OnInit {
     this.currentUrl = this.activatedRoute.snapshot.params;
     this.auth.getSinglePost(this.currentUrl['id']).subscribe(data => {
       if (!data['success']) {
-        console.log('error');
+        this.messageClass = 'alert alert-danger';
+        this.message = data['message'];
       } else {
         this.post = data['blog'];
+        this.blogTitle = data['blog']['title'];
         this.loading = false;
         this.spinner.hide();
       }
@@ -55,7 +61,6 @@ export class EditPostComponent implements OnInit {
       } else {
         this.messageClass = 'alert alert-success';
         this.message = data['message'];
-        console.log('data', data);
         setTimeout(() => {
           this.router.navigate(['single-post/', this.currentUrl['id']]);
         }, 1000);
