@@ -2,7 +2,7 @@ import { NotAuthService } from './services/not-auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -22,6 +22,9 @@ import { TableComponent } from './components/system/profile/table/table.componen
 import { MyDatePickerModule } from 'mydatepicker';
 import { AuthGuardService } from './services/auth-guard.service';
 import { NewPostComponent } from './components/system/new-post/new-post.component';
+import { BlogService } from './services/blog.service';
+import { SinglePostComponent } from './components/single-post/single-post.component';
+import { EditPostComponent } from './components/system/edit-post/edit-post.component';
 
 @NgModule({
   declarations: [
@@ -36,10 +39,13 @@ import { NewPostComponent } from './components/system/new-post/new-post.componen
     DropdownComponent,
     AddMoreComponent,
     TableComponent,
-    NewPostComponent
+    NewPostComponent,
+    SinglePostComponent,
+    EditPostComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
@@ -54,7 +60,7 @@ import { NewPostComponent } from './components/system/new-post/new-post.componen
       }
     })
   ],
-  providers: [AuthService, AuthGuardService, NotAuthService],
+  providers: [AuthService, AuthGuardService, NotAuthService, BlogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

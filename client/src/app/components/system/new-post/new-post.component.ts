@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
+import { BlogService } from '../../../services/blog.service';
+import { BlogModule } from '../../../moduls/blog.module';
 
 @Component({
   selector: 'app-new-post',
@@ -16,16 +18,29 @@ export class NewPostComponent implements OnInit {
   fileToUpload: File = null;
   uploadedText: String = 'Upload Image';
   fileState: String;
+  proccessing: Boolean = false;
+
+  showPost: Boolean = false;
+  showTitle: String = 'Title';
+  showBody: String = 'Body';
+
+  username: String;
 
   constructor(
     private formBuilder: FormBuilder,
-    public auth: AuthService,
+    private blogService: BlogService,
+    private auth: AuthService,
     private router: Router
   ) {
     this.createForm();
   }
 
   ngOnInit() {
+    this.auth.getProfile().subscribe(data => {
+      if (data['success']) {
+        this.username = data['user']['username'];
+      }
+    });
   }
 
   uploadImg(file: FileList) {
@@ -38,7 +53,6 @@ export class NewPostComponent implements OnInit {
       reader.readAsDataURL(this.fileToUpload);
       this.fileState = 'valid-file';
       this.uploadedText = 'File is uploaded';
-      console.log(this.fileToUpload);
     } else {
       this.fileState = 'invalid-file';
       this.uploadedText = 'You must upload image!';
@@ -62,8 +76,46 @@ export class NewPostComponent implements OnInit {
     });
   }
 
-  createPost() {
-    console.log(this.form);
+  enableForm() {
+    this.form.get('file').enable();
+    this.form.get('title').enable();
+    this.form.get('body').enable();
   }
 
+  disableForm() {
+    this.form.get('file').disable();
+    this.form.get('title').disable();
+    this.form.get('body').disable();
+  }
+
+  onShowPost() {
+    this.showPost = true;
+    this.showTitle = this.form.controls['title'].value;
+    this.showBody = this.form.controls['body'].value;
+  }
+
+  createPost() {
+    this.proccessing = true;
+    this.disableForm();
+    const blog: BlogModule = {
+      title: this.form.controls['title'].value,
+      body: this.form.controls['body'].value,
+      createdBy: this.username
+    };
+    this.blogService.newPost(blog).subscribe(data => {
+      if (!data['success']) {
+        this.enableForm();
+        this.proccessing = false;
+      } else {
+        this.form.reset();
+        this.enableForm();
+        this.proccessing = false;
+        this.uploadedText = 'Upload Image';
+        this.fileState = '';
+        this.router.navigate(['/posts']);
+        console.log(data);
+      }
+    });
+    this.showPost = false;
+  }
 }

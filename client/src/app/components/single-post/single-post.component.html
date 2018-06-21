@@ -1,0 +1,136 @@
+<div>
+
+  <div [ngClass]="messageClass">
+    {{ message }}
+  </div>
+
+  <section *ngIf="!showSinglePost">
+
+    <div class="md-modal md-effect-1" [ngClass]="modalClass">
+      <div class="md-content">
+        <h3>Delete Modal</h3>
+        <div>
+          <p>Are you sure you would like to delete this post?</p>
+          <ul>
+            <li><strong>Atention : </strong> if you delete this post all information would be lost!</li>
+          </ul>
+          <div class="modal-btns">
+            <button class="btn btn-dark btn-block" [disabled]='processing' (click)="deletePost()">Yes</button>
+            <a >
+              <button class="btn btn-dark btn-block" [disabled]='processing' (click)="closeModal()"
+                data-dismiss="modal">No</button>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div> <!--  /  Modal -->
+    <div class="md-overlay" ></div>
+
+    <div class="row mt-5 mb-5">
+      <div class="col-8">
+        <div class="card mb-3" *ngFor="let post of singlePost">
+          <img class="card-img-top" src="../../../assets/img/pexels-photo-819733.jpeg" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.body }}</p>
+            <div class="card-text">
+              <div class="post-info">
+                <p><strong>Posted by: </strong>{{ post.createdBy }}</p>
+                <p><strong>Date: </strong>{{ post.createdAt | date: 'MMM, dd, yyyy' }}</p>
+
+              </div>
+              <!-- post Infos -->
+              <div class="post-info">
+                <div class="dropdown">
+                  <p><strong>Likes: </strong>
+                    <img src="../../../assets/svg-tour/like.svg" alt="">
+                    {{ post.likes }}
+                  </p>
+                  <div class="dropdown-content">
+                    <a href="" *ngFor="let whoLikes of post.likedBy">{{ whoLikes }}</a>
+                  </div>
+                </div> <!-- / dropdown -->
+                <a [routerLink]="['/single-post/', post._id]">
+                  <img src="../../../assets/svg-tour/chat.svg" alt="">
+                  {{ post.comments.length }}<strong class="text-muted" (click)="modal = true"> comments</strong>
+                </a>
+              </div>
+              <!-- / post Infos -->
+              <div class="post-btns" *ngIf="username == post.createdBy">
+                <a [routerLink]="['/system/edit-post/', post._id]"><button type="button" class="btn btn-dark ">Edit</button></a>
+                <a class="delete" (click)="showModal()"><button type="button" class="btn btn-dark ">Delete</button></a>
+              </div>
+
+            </div>
+          </div> <!-- / card-body -->
+        </div> <!-- / card -->
+      </div>
+
+
+
+
+      <!-- Aside -->
+      <div class="col-4 pl-0">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi,
+          hic architecto culpa possimus cum perspiciatis corporis numquam at rem.
+            Quas similique modi provident suscipit aspernatur deserunt harum illo accusamus voluptas?</p>
+      </div>
+
+      <div class="col-8" >
+        <div class="comments-block-header">
+          <h4>Comments</h4>
+        </div>
+          <ul class="comment-section">
+            <li class="comment user-comment">
+              <div class="info">
+                  <a href="#">Anie Silverston</a>
+                  <span>4 hours ago</span>
+              </div>
+              <a class="avatar" href="#">
+                  <img src="../../../assets/svg-tour/girl.svg" width="35" alt="Profile Avatar" title="Anie Silverston" />
+              </a>
+              <p>Suspendisse gravida sem?</p>
+            </li>
+
+            <li class="comment author-comment">
+              <div class="info">
+                  <a href="#">Jack Smith</a>
+                  <span>3 hours ago</span>
+              </div>
+              <a class="avatar" href="#">
+                  <img src="../../../assets/svg-tour/girl.svg" width="35" alt="Profile Avatar" title="Jack Smith" />
+              </a>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Suspendisse gravida sem sit amet molestie portitor.</p>
+            </li>
+
+            <li class="comment user-comment">
+              <div class="info">
+                  <a href="#">Bradley Jones</a>
+                  <span>1 hour ago</span>
+              </div>
+              <a class="avatar" href="#">
+                  <img src="../../../assets/svg-tour/man.svg" width="35" alt="Profile Avatar" title="Bradley Jones" />
+              </a>
+              <p>Suspendisse gravida sem sit amet molestie portitor?</p>
+            </li>
+
+            <li class="write-new" *ngIf="auth.loggedIn()">
+              <form action="#" method="post">
+                <textarea placeholder="Write your comment here" name="comment"></textarea>
+                <div>
+                <!-- <img src="images/avatar_user_2.jpg" width="35" alt="Profile of Bradley Jones" title="Bradley Jones" /> -->
+                  <button type="submit">Submit</button>
+                </div>
+              </form>
+            </li>
+          </ul>
+      </div>
+  </div>
+
+</section>
+
+</div>
+
+

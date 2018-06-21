@@ -2,29 +2,48 @@
  loadingText="Loading..." type="ball-scale-multiple"></ngx-spinner>
 
 <div *ngIf="loader">
-<!-- <div>
-  <div [ngClass]="messageClass"> {{ message }} </div>
-</div> -->
 
-<div class="reload-blk">
-  <button class="btn btn-success reload-btn" (click)="reloadBlogs()">
-    <img src="../../../assets/svg-tour/refresh.svg" alt=""></button>
+
+<div class="modal fade" [ngClass]="modalClass"
+[ngStyle]="{ 'display': display }" >
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Tour Blog</h5>
+        <button type="button" class="close" (click)="modalClass = ''; display = 'none'">
+          <span aria-hidden="true" >&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Comments can read only authorizated users...
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" >Close</button> -->
+        <a routerLink="/register" class="btn btn-dark">Register</a>
+        <a routerLink="/login" class="btn btn-dark">Login</a>
+      </div>
+    </div>
+  </div>
 </div>
 
+<section *ngIf="!showSinglePost">
 
-<section>
+  <div class="reload-blk">
+    <button class="btn btn-success reload-btn" (click)="reloadBlogs()">
+      <img src="../../../assets/svg-tour/refresh.svg" alt=""></button>
+  </div>
+
   <div class="row mt-5 mb-5">
       <div class="col-8">
-        <div class="card mb-3">
-          <img class="card-img-top" src="https://i.ytimg.com/vi/L3V7LKYPIUQ/maxresdefault.jpg" alt="Card image cap">
+        <div class="card mb-3" *ngFor="let posts of blogPosts">
+          <img class="card-img-top" src="../../../assets/img/pexels-photo-819733.jpeg" alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit longer.</p>
+            <h5 class="card-title">{{ posts.title }}</h5>
+            <p class="card-text">{{ posts.body }}</p>
             <div class="card-text">
               <div class="post-info">
-                <p><strong>Posted by: </strong>User</p>
-                <p><strong>Date: </strong>june 20, 2018</p>
+                <p><strong>Posted by: </strong>{{ posts.createdBy }}</p>
+                <p><strong>Date: </strong>{{ posts.createdAt | date: 'MMM, dd, yyyy' }}</p>
 
               </div>
               <!-- post Infos -->
@@ -32,23 +51,22 @@
                 <div class="dropdown">
                   <p><strong>Likes: </strong>
                     <img src="../../../assets/svg-tour/like.svg" alt="">
-                    4
+                    {{ posts.likes }}
                   </p>
                   <div class="dropdown-content">
-                    <a href="">dadi45</a>
-                    <a href="">Karla78</a>
-                    <a href="">tsddhaeee</a>
-                    <a href="">Aassw</a>
+                    <a href="" *ngFor="let whoLikes of posts.likedBy">{{ whoLikes }}</a>
                   </div>
                 </div> <!-- / dropdown -->
-                <p (click)="onComments()">
+                <a [routerLink]="['/single-post/', posts._id]">
                   <img src="../../../assets/svg-tour/chat.svg" alt="">
-                  12<strong class="text-muted"> comments</strong>
-                </p>
+                  {{ posts.comments.length }}<strong class="text-muted" (click)="modal = true"> comments</strong>
+                </a>
               </div>
               <!-- End post Infos -->
-              <div class="post-btns">
-                <a href="#"><button type="button" class="btn btn-dark ">Edit</button></a>
+              <div class="post-btns" *ngIf="username === posts.createdBy">
+                <a [routerLink]="['/system/edit-post/', posts._id]">
+                  <button type="button" class="btn btn-dark ">Edit</button>
+                </a>
                 <a href="#" class="delete"><button type="button" class="btn btn-dark ">Delete</button></a>
               </div>
 

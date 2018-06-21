@@ -11,18 +11,22 @@ import { ProfileComponent } from './components/system/profile/profile.component'
 import { AddMoreComponent } from './components/system/profile/add-more/add-more.component';
 import { TableComponent } from './components/system/profile/table/table.component';
 import { NewPostComponent } from './components/system/new-post/new-post.component';
+import { SinglePostComponent } from './components/single-post/single-post.component';
+import { EditPostComponent } from './components/system/edit-post/edit-post.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'posts', component: PostsComponent },
   { path: 'login', component: LoginComponent, canActivate: [NotAuthService] },
   { path: 'register', component: RegisterComponent, canActivate: [NotAuthService] },
+  { path: 'single-post/:id', component: SinglePostComponent },
   { path: 'system', component: SystemComponent, canActivate: [AuthGuardService], children: [
     { path: 'profile', component: ProfileComponent, children: [
       { path: '', component: TableComponent },
       { path: 'add-more', component: AddMoreComponent }
     ] },
-    { path: 'new-post', component: NewPostComponent }
+    { path: 'new-post', component: NewPostComponent },
+    { path: 'edit-post/:id', component: EditPostComponent },
    ] },
   { path: '**', component: HomeComponent }
 ];

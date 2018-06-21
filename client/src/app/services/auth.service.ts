@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  // @Output() getUserName: EventEmitter<any> = new EventEmitter();
   getUserName: any;
 
   domain = 'http://localhost:8000';
@@ -70,6 +69,10 @@ export class AuthService {
   getProfile(): Observable<Object> {
     this.createAuthHeaders();
     return this.http.get(this.domain + '/authentication/profile', this.options);
+  }
+
+  getSinglePost(id: String) {
+    return this.http.get(this.domain + '/authentication/singleBlog/' + id);
   }
 
   loggedIn() {

@@ -4,6 +4,23 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
+
+let imageChecker = (image) => {
+    if (!image) {
+        return false;
+    } else {
+        return true;
+    }
+};
+
+const imageValidators = [
+    {
+        validator: imageChecker,
+        message: 'Image field is required'
+    }
+];
+
+
 let titleLengthChecker = (title) => {
     if (!title) {
         return false;
@@ -76,7 +93,7 @@ const commentValidators = [
 
 
 const blogSchema = new Schema({
-    // image: { type: Buffer, contentType: String },
+    // image: { type: Buffer, contentType: String, required: true, validate: imageValidators },
     title: { type: String, required: true, validate: titleValidators },
     body: { type: String, required: true, validate: bodyValidators },
     createdBy: { type: String },

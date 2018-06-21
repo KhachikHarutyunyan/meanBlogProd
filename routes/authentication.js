@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Blog = require('../models/blog');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 
@@ -145,21 +146,58 @@ module.exports = (router) => {
         }
     });
 
-    // router.use((req, res, next) => {
-    //    const token = req.headers['authorization'];
-    //    if (!token) {
-    //        res.json({ success: false, message: 'No token provided' });
-    //    } else {
-    //        jwt.verify(token, config.secret, (err, decoded) => {
-    //            if (err) {
-    //                res.json({ success: false, message: 'Token invalid: ' + err });
-    //            } else {
-    //                req.decoded = decoded;
-    //                next();
-    //            }
-    //        });
-    //    }
-    // });
+
+    //get all blogs 
+    router.get('/allBlogs', (req, res) => {
+        
+        Blog.find({}, (err, blogs) => {
+          if (err) {
+            res.json({ success: false, message: err });
+          } else {
+            if (!blogs) {
+              res.json({ success: false, message: 'No blogs found' });
+            } else {
+              res.json({ success: true, blogs: blogs });
+            }
+          }
+        }).sort({ '_id': -1 });
+      });
+
+      router.get('/singleBlog/:id', (req, res) => {
+        if (!req.params.id) {
+          res.json({ success: false, message: 'No blog ID was provided' })
+        } else {
+            Blog.findOne({ _id: req.params.id }, (err, blog) => {
+                if (err) {
+                  res.json({ success: false, message: 'Not a valid blog ID' });
+                } else {
+                    if (!blog) {
+                        res.json({ success: false, message: 'Blog not found' })
+                    } else {
+                        res.json({ success: true, blog: blog });
+                    }
+                }
+            });
+        }
+    });
+
+      // vse zapros@ v@she dannogo 'router.use' dostupn@ bez avtorizacii
+
+    router.use((req, res, next) => {
+       const token = req.headers['authorization'];
+       if (!token) {
+           res.json({ success: false, message: 'No token provided' });
+       } else {
+           jwt.verify(token, config.secret, (err, decoded) => {
+               if (err) {
+                   res.json({ success: false, message: 'Token invalid: ' + err });
+               } else {
+                   req.decoded = decoded;
+                   next();
+               }
+           });
+       }
+    });
 
     router.get('/profile', (req, res) => {
         User.findOne({ _id: req.decoded.userId }).select('username email sex').exec((err, user) => {

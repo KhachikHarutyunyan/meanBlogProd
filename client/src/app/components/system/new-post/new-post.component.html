@@ -35,20 +35,25 @@
       </p>
     </div>
 
-    <input type="submit" class="btn btn-dark send-btn"
-    [disabled]="!form.valid || form.controls['file'].value == ''"
-     value="LoadPost">
+    <div class="form-bottom">
+      <button class="btn btn-danger btn-sm" type="button" (click)="onShowPost()"
+      [disabled]="!form.valid || form.controls['file'].value == ''" >Show before post</button>
+      <input type="submit" class="btn btn-dark btn-sm send-btn"
+      [disabled]="proccessing || !form.valid || form.controls['file'].value == ''"
+        value="Load new Post">
+    </div>
+
 
   </form>
 </div>
-<div class="col-md-8 offset-md-2">
+
+<div class="col-md-8 offset-md-2" *ngIf="showPost">
   <div class="card mb-3">
     <!-- <img class="card-img-top" src="https://i.ytimg.com/vi/L3V7LKYPIUQ/maxresdefault.jpg" alt="Card image cap"> -->
-    <img class="card-img-top" [src]="imgUrl" alt="Card image cap">
+    <img class="card-img-top" [src]="imgUrl" alt="Uploaded image">
     <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      <h5 class="card-title">{{ showTitle }}</h5>
+      <p class="card-text">{{ showBody }}</p>
     </div>
   </div>
 </div>

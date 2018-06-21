@@ -20,6 +20,10 @@ textarea {
   border: 1px solid #343a40;
 }
 
+.form-bottom {
+  display: flex;
+  justify-content: space-between;
+}
 
 .send-btn {
   color: #b54141;
@@ -33,4 +37,14 @@ textarea {
 }
 .invalid-file {
   color: #b54141;
+}
+.btn-danger {
+  background-color: #b54141;
+  border: 1px solid #b54141;
+  color: #343a40;
+}
+
+.btn-danger:hover {
+  background-color: #cc5757;
+  border: 1px solid #cc5757;
 }
