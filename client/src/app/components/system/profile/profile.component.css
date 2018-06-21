@@ -66,6 +66,10 @@
   color: #b54141;
 }
 
+.btn-dark {
+  color: #b54141
+}
+
 
 @media (max-width: 768px) {
   .aside-avatar {
