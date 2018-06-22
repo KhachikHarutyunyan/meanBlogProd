@@ -46,5 +46,11 @@ export class BlogService {
     return this.http.delete(this.domain + '/blogs/deletePost/' + id, this.options);
   }
 
+  likePost(id: String) {
+    const postData = { id: id };
+    this.createAuthHeaders();
+    return this.http.put(this.domain + '/blogs/likePost/', postData, this.options);
+  }
+
 
 }

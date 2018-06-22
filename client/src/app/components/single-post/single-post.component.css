@@ -50,6 +50,12 @@
   cursor: pointer;
 }
 
+.post-info a {
+  text-decoration: none;
+  color: #b54141;
+  cursor: pointer;
+}
+
 .post-info img {
   width: 18px;
   margin: 0 3px;
@@ -184,6 +190,9 @@
 	color: #b54141;
 }
 
+.modal-btns a {
+  text-decoration: none;
+}
 
 /* Individual modal styles with animations/transitions */
 

@@ -27,6 +27,31 @@
         </div>
       </div>
     </div> <!--  /  Modal -->
+
+    <div class="md-modal md-effect-1 " [ngClass]="guestModalClass">
+      <div class="md-content">
+        <h3>{{ guestModalTitle }}</h3>
+        <div>
+          <p>{{ guestModalMessage }}</p>
+          <div class="modal-btns">
+            <a routerLink="/login">
+              <button class="btn btn-dark btn-block" (click)="closeGuestModal()"
+                data-dismiss="modal">Login</button>
+            </a>
+            <a routerLink="/register">
+              <button class="btn btn-dark btn-block" (click)="closeGuestModal()"
+                data-dismiss="modal">Registration</button>
+            </a>
+            <a >
+              <button class="btn btn-dark btn-block" (click)="closeGuestModal()"
+                data-dismiss="modal">Close</button>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
     <div class="md-overlay" ></div>
 
     <div class="row mt-5 mb-5">
@@ -38,24 +63,25 @@
             <p class="card-text">{{ post.body }}</p>
             <div class="card-text">
               <div class="post-info">
-                <p><strong>Posted by: </strong>{{ post.createdBy }}</p>
+                <p (click)="guestOnAuthor()"><strong>Posted by: </strong>{{ post.createdBy }}</p>
                 <p><strong>Date: </strong>{{ post.createdAt | date: 'MMM, dd, yyyy' }}</p>
 
               </div>
               <!-- post Infos -->
               <div class="post-info">
                 <div class="dropdown">
-                  <p><strong>Likes: </strong>
+                  <p (click)="guestOnLike()" (click)="likedUser(post._id)"><strong>Likes: </strong>
                     <img src="../../../assets/svg-tour/like.svg" alt="">
                     {{ post.likes }}
                   </p>
                   <div class="dropdown-content">
                     <a href="" *ngFor="let whoLikes of post.likedBy">{{ whoLikes }}</a>
                   </div>
-                </div> <!-- / dropdown -->
-                <a [routerLink]="['/single-post/', post._id]">
+                </div> <!-- / dropdown likes -->
+
+                <a (click)="guestOnComment()">
                   <img src="../../../assets/svg-tour/chat.svg" alt="">
-                  {{ post.comments.length }}<strong class="text-muted" (click)="modal = true"> comments</strong>
+                  {{ post.comments.length }}<strong class="text-muted"> comments</strong>
                 </a>
               </div>
               <!-- / post Infos -->
@@ -74,6 +100,7 @@
 
       <!-- Aside -->
       <div class="col-4 pl-0">
+        <h4>Most popular</h4>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi,
           hic architecto culpa possimus cum perspiciatis corporis numquam at rem.
             Quas similique modi provident suscipit aspernatur deserunt harum illo accusamus voluptas?</p>
@@ -104,7 +131,7 @@
                   <img src="../../../assets/svg-tour/girl.svg" width="35" alt="Profile Avatar" title="Jack Smith" />
               </a>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse gravida sem sit amet molestie portitor.</p>
+                Suspendisse gravida sem sit amet molestie portitor.</p>
             </li>
 
             <li class="comment user-comment">
@@ -122,7 +149,6 @@
               <form action="#" method="post">
                 <textarea placeholder="Write your comment here" name="comment"></textarea>
                 <div>
-                <!-- <img src="images/avatar_user_2.jpg" width="35" alt="Profile of Bradley Jones" title="Bradley Jones" /> -->
                   <button type="submit">Submit</button>
                 </div>
               </form>

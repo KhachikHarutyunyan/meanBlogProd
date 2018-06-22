@@ -130,7 +130,49 @@ module.exports = (router) => {
         }
     });
 
-      
+    router.put('/likePost', (req, res) => {
+        if (!req.body.id) {
+            res.json({ success: false, message: 'No id was provided' });
+        } else {
+            Blog.findOne({ _id: req.body.id }, (err, blog) => {
+                if (err) {
+                    res.json({ success: false, message: 'Invalid blog ID' });
+                } else {
+                    if (!blog) {
+                        res.json({ success: false, message: 'that blog was not found' });
+                    } else {
+                        User.findOne({ _id: req.decoded.userId }, (err, user) => {
+                            if (err) {
+                                res.json({ success: false, message: 'Something went wrong' });
+                            } else {
+                                if (!user) {
+                                    res.json({ success: false, message: 'Could not authenticate user ' });
+                                } else {
+                                    if (user.username === blog.username) {
+                                        res.json({ success: false, message: 'Cannot like your own post' });
+                                    } else {
+                                        if (blog.likedBy.includes(user.username)) {
+                                            res.json({ success: false, message: 'You already liked this post' });
+                                        } else {
+                                            blog.likes++;
+                                            blog.likedBy.push(user.username);
+                                            blog.save((err) => {
+                                                if (err) {
+                                                    res.json({ success: false, message: 'Something went wrong' });
+                                                } else {
+                                                    res.json({ success: true, message: 'Post Liked' });
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
 
 
     return router;

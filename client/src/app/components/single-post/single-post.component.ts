@@ -19,8 +19,14 @@ export class SinglePostComponent implements OnInit {
   modalClass: String;
   display: String = 'none';
 
+  comments: Array<String> = [];
+
   messageClass: String;
   message: String;
+
+  guestModalClass: String;
+  guestModalTitle: String;
+  guestModalMessage: String;
 
   constructor(
     public auth: AuthService,
@@ -56,6 +62,36 @@ export class SinglePostComponent implements OnInit {
     this.modalClass = '';
   }
 
+  closeGuestModal() {
+    this.guestModalClass = '';
+  }
+
+  showGuestModal(title, body) {
+    if (!this.auth.loggedIn()) {
+      this.guestModalTitle = title;
+      this.guestModalMessage = body;
+      this.guestModalClass = 'md-show';
+    }
+  }
+
+  guestOnComment() {
+    const title = 'You must logged in';
+    const body = 'Only logged in users can post comments';
+    this.showGuestModal(title, body);
+  }
+
+  guestOnLike() {
+    const title = 'You must logged in';
+    const body = 'Only logged in users can like a post';
+    this.showGuestModal(title, body);
+  }
+
+  guestOnAuthor() {
+    const title = 'You must logged in';
+    const body = 'Only logged in users can see other users information';
+    this.showGuestModal(title, body);
+  }
+
   deletePost() {
     this.blogService.deletePost(this.currentUrl['id']).subscribe((data) => {
       if (!data['success']) {
@@ -70,6 +106,15 @@ export class SinglePostComponent implements OnInit {
           this.router.navigate(['/posts']);
         }, 1200);
       }
+    });
+  }
+
+  likedUser(id) {
+    console.log(id);
+    this.blogService.likePost(id).subscribe(data => {
+      // this.getSinglePost(this.currentUrl['id']);
+      window.location.reload();
+      console.log(data);
     });
   }
 
