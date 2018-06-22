@@ -1,3 +1,4 @@
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -25,11 +26,13 @@ export class SinglePostComponent implements OnInit {
     public auth: AuthService,
     private blogService: BlogService,
     private router: Router,
+    private spinner: NgxSpinnerService,
     private activatedRouter: ActivatedRoute,
   ) { }
 
   ngOnInit() {
     this.currentUrl = this.activatedRouter.snapshot.params;
+    this.spinner.show();
     if (this.auth.loggedIn()) {
       this.auth.getProfile().subscribe(profile => {
         this.username = profile['user'].username;
@@ -41,6 +44,8 @@ export class SinglePostComponent implements OnInit {
   getSinglePost(postUrl) {
     this.auth.getSinglePost(postUrl).subscribe((data: BlogModule[]) => {
       this.singlePost.push(data['blog']);
+      this.processing = true;
+      this.spinner.hide();
     });
   }
 
