@@ -17,9 +17,9 @@
             <li><strong>Atention : </strong> if you delete this post all information would be lost!</li>
           </ul>
           <div class="modal-btns">
-            <button class="btn btn-dark btn-block" [disabled]='processing' (click)="deletePost()">Yes</button>
+            <button class="btn btn-dark btn-block"  (click)="deletePost()">Yes</button>
             <a >
-              <button class="btn btn-dark btn-block" [disabled]='processing' (click)="closeModal()"
+              <button class="btn btn-dark btn-block"  (click)="closeModal()"
                 data-dismiss="modal">No</button>
             </a>
           </div>
@@ -50,9 +50,9 @@
 
         </div>
       </div>
-    </div>
+    </div> <!-- / guest Modal -->
 
-    <div class="md-overlay" ></div>
+    <div class="md-overlay" ></div><!-- modal background -->
 
     <div class="row mt-5 mb-5">
       <div class="col-8">
@@ -70,19 +70,19 @@
               <!-- post Infos -->
               <div class="post-info">
                 <div class="dropdown">
-                  <p (click)="guestOnLike()" (click)="likedUser(post._id)"><strong>Likes: </strong>
+                  <p (click)="likedUser(post._id)" [title]="likedTitle"><strong>Likes: </strong>
                     <img src="../../../assets/svg-tour/like.svg" alt="">
-                    {{ post.likes }}
+                    {{ pusherLike }}
                   </p>
-                  <div class="dropdown-content">
-                    <a href="" *ngFor="let whoLikes of post.likedBy">{{ whoLikes }}</a>
+                  <div class="dropdown-content" *ngIf="auth.loggedIn()">
+                    <a href="" *ngFor="let whoLikes of pusherLikedBy">{{ whoLikes }}</a>
                   </div>
                 </div> <!-- / dropdown likes -->
 
-                <a (click)="guestOnComment()">
+                <p>
                   <img src="../../../assets/svg-tour/chat.svg" alt="">
                   {{ post.comments.length }}<strong class="text-muted"> comments</strong>
-                </a>
+                </p>
               </div>
               <!-- / post Infos -->
               <div class="post-btns" *ngIf="username == post.createdBy">
@@ -109,6 +109,7 @@
       <div class="col-8" >
         <div class="comments-block-header">
           <h4>Comments</h4>
+          <p *ngIf="!auth.loggedIn()">Only logged in users can wright comments!</p>
         </div>
           <ul class="comment-section">
             <li class="comment user-comment">

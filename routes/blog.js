@@ -2,7 +2,16 @@ const User = require('../models/user');
 const Blog = require('../models/blog');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
+const Pusher = require('pusher');
 
+
+const pusher = new Pusher({
+  appId: "548769",
+  key: "61fe5cb7a3254f2f8e71",
+  secret: "2e795fe5fb91c8427e95",
+  cluster: "ap2",
+  encrypted: true
+});
 
 module.exports = (router) => {
 
@@ -139,7 +148,7 @@ module.exports = (router) => {
                     res.json({ success: false, message: 'Invalid blog ID' });
                 } else {
                     if (!blog) {
-                        res.json({ success: false, message: 'that blog was not found' });
+                        res.json({ success: false, message: 'That blog was not found' });
                     } else {
                         User.findOne({ _id: req.decoded.userId }, (err, user) => {
                             if (err) {
@@ -156,10 +165,16 @@ module.exports = (router) => {
                                         } else {
                                             blog.likes++;
                                             blog.likedBy.push(user.username);
+                                            
+
                                             blog.save((err) => {
                                                 if (err) {
                                                     res.json({ success: false, message: 'Something went wrong' });
                                                 } else {
+                                                  pusher.trigger('events-channel', 'new-like', {
+                                                    likes: blog.likes,
+                                                    likedBy: blog.likedBy
+                                                  });
                                                     res.json({ success: true, message: 'Post Liked' });
                                                 }
                                             });

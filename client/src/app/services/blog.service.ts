@@ -1,7 +1,14 @@
+declare const Pusher: any;
+// import {Pusher} from '../../../node_modules/pusher-js/dist/web/pusher.min.js';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BlogModule } from '../moduls/blog.module';
+import { environment } from '../../environments/environment';
+
+// declare const Pusher: any;
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +18,19 @@ export class BlogService {
   domain = this.auth.domain;
   options;
 
+  pusher: any;
+  channel: any;
+
   constructor(
     private auth: AuthService,
     private http: HttpClient
-  ) { }
+  ) {
+    this.pusher = new Pusher(environment.pusher.key, {
+      cluster: environment.pusher.cluster,
+      encrypted: true
+    });
+    this.channel = this.pusher.subscribe('events-channel');
+  }
 
   createAuthHeaders() {
     this.auth.loadToken();

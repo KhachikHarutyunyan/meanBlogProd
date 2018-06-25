@@ -18,6 +18,8 @@ export class SinglePostComponent implements OnInit {
   processing: Boolean = false;
   modalClass: String;
   display: String = 'none';
+  likeCount: any;
+  likedTitle: String = 'Like post';
 
   comments: Array<String> = [];
 
@@ -27,6 +29,9 @@ export class SinglePostComponent implements OnInit {
   guestModalClass: String;
   guestModalTitle: String;
   guestModalMessage: String;
+
+  pusherLike: any = 0;
+  pusherLikedBy: any;
 
   constructor(
     public auth: AuthService,
@@ -45,6 +50,10 @@ export class SinglePostComponent implements OnInit {
       });
     }
     this.getSinglePost(this.currentUrl['id']);
+    this.blogService.channel.bind('new-like', data => {
+      this.pusherLike = data.likes;
+      this.pusherLikedBy = data.likedBy;
+    });
   }
 
   getSinglePost(postUrl) {
@@ -52,6 +61,8 @@ export class SinglePostComponent implements OnInit {
       this.singlePost.push(data['blog']);
       this.processing = true;
       this.spinner.hide();
+      this.pusherLike = this.singlePost[0]['likes'];
+      this.pusherLikedBy = this.singlePost[0]['likedBy'];
     });
   }
 
@@ -72,18 +83,6 @@ export class SinglePostComponent implements OnInit {
       this.guestModalMessage = body;
       this.guestModalClass = 'md-show';
     }
-  }
-
-  guestOnComment() {
-    const title = 'You must logged in';
-    const body = 'Only logged in users can post comments';
-    this.showGuestModal(title, body);
-  }
-
-  guestOnLike() {
-    const title = 'You must logged in';
-    const body = 'Only logged in users can like a post';
-    this.showGuestModal(title, body);
   }
 
   guestOnAuthor() {
@@ -110,12 +109,23 @@ export class SinglePostComponent implements OnInit {
   }
 
   likedUser(id) {
-    console.log(id);
-    this.blogService.likePost(id).subscribe(data => {
-      // this.getSinglePost(this.currentUrl['id']);
-      window.location.reload();
-      console.log(data);
-    });
+    const likedBy = this.singlePost[0]['likedBy'];
+    if (this.auth.loggedIn() && (this.username !== this.singlePost[0]['createdBy'])) {
+
+      if (likedBy.indexOf(this.username) > -1) {
+        this.likedTitle = 'You can like post only ones';
+      } else {
+        likedBy.push(this.username);
+        this.pusherLikedBy.push(this.username);
+        this.pusherLike = this.pusherLikedBy.length;
+        this.blogService.likePost(id).subscribe(data => {
+        });
+      }
+    } else {
+      const title = 'You must logged in';
+      const body = 'Only logged in users can like a post';
+      this.showGuestModal(title, body);
+    }
   }
 
 }
