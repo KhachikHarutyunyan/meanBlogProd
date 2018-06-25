@@ -1,12 +1,10 @@
 declare const Pusher: any;
-// import {Pusher} from '../../../node_modules/pusher-js/dist/web/pusher.min.js';
+
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BlogModule } from '../moduls/blog.module';
 import { environment } from '../../environments/environment';
-
-// declare const Pusher: any;
 
 
 
@@ -29,7 +27,13 @@ export class BlogService {
       cluster: environment.pusher.cluster,
       encrypted: true
     });
-    this.channel = this.pusher.subscribe('events-channel');
+    this.channel = this.pusher.subscribe('events-channel', 'chat');
+  }
+
+  channel;
+
+  public init() {
+    return this.channel;
   }
 
   createAuthHeaders() {
@@ -66,6 +70,15 @@ export class BlogService {
     const postData = { id: id };
     this.createAuthHeaders();
     return this.http.put(this.domain + '/blogs/likePost/', postData, this.options);
+  }
+
+  postComment(id: String, comment: String) {
+    this.createAuthHeaders();
+    const commentData = {
+      id: id,
+      comment: comment
+    };
+    return this.http.post(this.domain + '/blogs/comment', commentData, this.options );
   }
 
 

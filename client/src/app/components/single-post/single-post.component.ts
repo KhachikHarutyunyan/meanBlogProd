@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BlogModule } from '../../moduls/blog.module';
 import { BlogService } from '../../services/blog.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-single-post',
@@ -22,6 +23,7 @@ export class SinglePostComponent implements OnInit {
   likedTitle: String = 'Like post';
 
   comments: Array<String> = [];
+  showForm: Boolean = false;
 
   messageClass: String;
   message: String;
@@ -30,8 +32,13 @@ export class SinglePostComponent implements OnInit {
   guestModalTitle: String;
   guestModalMessage: String;
 
+  commentForm: FormGroup;
+
   pusherLike: any = 0;
   pusherLikedBy: any;
+  pusherMessages = [];
+
+  postComments: Array<any> = [];
 
   constructor(
     public auth: AuthService,
@@ -39,7 +46,10 @@ export class SinglePostComponent implements OnInit {
     private router: Router,
     private spinner: NgxSpinnerService,
     private activatedRouter: ActivatedRoute,
-  ) { }
+    private formBuilder: FormBuilder
+  ) {
+    this.createCommentForm();
+  }
 
   ngOnInit() {
     this.currentUrl = this.activatedRouter.snapshot.params;
@@ -49,20 +59,46 @@ export class SinglePostComponent implements OnInit {
         this.username = profile['user'].username;
       });
     }
-    this.getSinglePost(this.currentUrl['id']);
+
+
     this.blogService.channel.bind('new-like', data => {
       this.pusherLike = data.likes;
       this.pusherLikedBy = data.likedBy;
     });
+
+    const channel = this.blogService.init('chat');
+    channel.bind('message', (data) => {
+      this.pusherMessages = this.pusherMessages.concat(data);
+
+    });
+    console.log(this.pusherMessages);
+    this.getSinglePost(this.currentUrl['id']);
   }
 
   getSinglePost(postUrl) {
     this.auth.getSinglePost(postUrl).subscribe((data: BlogModule[]) => {
-      this.singlePost.push(data['blog']);
-      this.processing = true;
-      this.spinner.hide();
-      this.pusherLike = this.singlePost[0]['likes'];
-      this.pusherLikedBy = this.singlePost[0]['likedBy'];
+      if (data['success']) {
+        this.singlePost.push(data['blog']);
+        if (this.singlePost['0']['comments'].length > 0) {
+          this.postComments = this.singlePost[0]['comments'];
+          this.pusherMessages = this.singlePost[0]['comments'];
+        }
+        this.processing = true;
+        this.spinner.hide();
+        this.pusherLike = this.singlePost[0]['likes'];
+        this.pusherLikedBy = this.singlePost[0]['likedBy'];
+      }
+
+    });
+  }
+
+  createCommentForm() {
+    this.commentForm = this.formBuilder.group({
+      comment: ['', Validators.compose([
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(200)
+      ])]
     });
   }
 
@@ -126,6 +162,17 @@ export class SinglePostComponent implements OnInit {
       const body = 'Only logged in users can like a post';
       this.showGuestModal(title, body);
     }
+  }
+
+  postComment() {
+    const id = this.singlePost[0]['_id'];
+    const comment = this.commentForm.get('comment').value;
+    // this.postComments.push({ comment: comment, commentator: this.username });
+    this.blogService.postComment(id, comment).subscribe(data => {
+      this.showForm = true;
+      // this.getSinglePost(this.currentUrl['id']);
+      //
+    });
   }
 
 }

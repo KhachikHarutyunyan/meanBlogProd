@@ -1,10 +1,8 @@
 import { AuthService } from './../../services/auth.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Component, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../../services/blog.service';
 import { BlogModule } from '../../moduls/blog.module';
-import { EventEmitter } from 'events';
 
 @Component({
   selector: 'app-posts',
@@ -18,10 +16,7 @@ export class PostsComponent implements OnInit {
   loader: Boolean = false;
   username: String;
   likeCount: any;
-  doLike: Boolean = true;
 
-  modal: Boolean = false;
-  modalClass: String = '';
   likedTitle: String = 'Like post';
   likedId;
 
@@ -34,8 +29,7 @@ export class PostsComponent implements OnInit {
   constructor(
     private spinner: NgxSpinnerService,
     public auth: AuthService,
-    private blogService: BlogService,
-    private router: Router
+    private blogService: BlogService
   ) { }
 
   ngOnInit() {
@@ -74,7 +68,6 @@ export class PostsComponent implements OnInit {
         this.likedTitle = 'You can like post only ones';
       } else {
         this.getAllBlogs();
-        this.doLike = false;
         this.blogService.likePost(id).subscribe(data => {
           this.getAllBlogs();
         });

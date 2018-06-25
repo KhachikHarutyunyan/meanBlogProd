@@ -216,7 +216,6 @@
 	opacity: 1;
 }
 
-
 .comment-section{
   list-style: none;
   max-width: 800px;
@@ -378,19 +377,23 @@
 }
 
 .write-new button{
-  float:right;
-  background-color:  #87bae1;
+  float: right;
+  background-color:  #343a40;
   box-shadow: 1px 2px 1px 0 rgba(0, 0, 0, 0.12);
   border-radius: 2px;
   border: 0;
-  color: #ffffff;
+  color: #a0de6a;
   font-weight: bold;
   cursor: pointer;
-
   padding: 10px 25px;
   margin-top: 18px;
 }
 
+
+.valid-form {
+  color: #b54141;
+  font-size: 14px;
+}
 
 
 /* Responsive styles */

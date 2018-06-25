@@ -106,23 +106,31 @@
             Quas similique modi provident suscipit aspernatur deserunt harum illo accusamus voluptas?</p>
       </div>
 
+      <ul>
+        <li *ngFor="let comment of pusherMessages">{{ pusherMessages['comment'] }}</li>
+      </ul>
+
       <div class="col-8" >
         <div class="comments-block-header">
           <h4>Comments</h4>
+          <button class="btn btn-dark"
+          (click)="showForm = !showForm" *ngIf="postComments.length <= 0">Add Comment</button>
           <p *ngIf="!auth.loggedIn()">Only logged in users can wright comments!</p>
+
         </div>
-          <ul class="comment-section">
-            <li class="comment user-comment">
+          <ul class="comment-section" *ngIf="showForm || postComments.length > 0">
+            <!-- <li class="comment user-comment" *ngFor="let comment of postComments"> -->
+            <li class="comment user-comment" *ngFor="let comment of pusherMessages">
               <div class="info">
-                  <a href="#">Anie Silverston</a>
+                  <a href="#">{{ comment.commentator }}</a>
                   <span>4 hours ago</span>
               </div>
               <a class="avatar" href="#">
                   <img src="../../../assets/svg-tour/girl.svg" width="35" alt="Profile Avatar" title="Anie Silverston" />
               </a>
-              <p>Suspendisse gravida sem?</p>
+              <p>{{ comment.comment }}</p>
             </li>
-
+<!--
             <li class="comment author-comment">
               <div class="info">
                   <a href="#">Jack Smith</a>
@@ -144,13 +152,31 @@
                   <img src="../../../assets/svg-tour/man.svg" width="35" alt="Profile Avatar" title="Bradley Jones" />
               </a>
               <p>Suspendisse gravida sem sit amet molestie portitor?</p>
-            </li>
-
+            </li>-->
             <li class="write-new" *ngIf="auth.loggedIn()">
-              <form action="#" method="post">
-                <textarea placeholder="Write your comment here" name="comment"></textarea>
+              <form [formGroup]="commentForm">
+
+                <textarea placeholder="Write your comment here" formControlName="comment"
+                 name="comment"></textarea>
+
+                 <div>
+                    <p
+                    *ngIf="(commentForm.controls['comment'].errors?.minlength &&
+                     commentForm.controls['comment'].dirty) ||
+                     (commentForm.controls['comment'].errors?.maxlength &&
+                     commentForm.controls['comment'].dirty)">
+                     Comment must be at least 1 character but no more than 200.
+                    </p>
+                    <p
+                    *ngIf="commentForm.controls['comment'].errors?.required &&
+                     commentForm.controls['comment'].dirty" class="valid-form">
+                     This field is required
+                    </p>
+                  </div>
+
                 <div>
-                  <button type="submit">Submit</button>
+                  <button type="button" (click)="postComment()" class="btn btn-dark"
+                    [disabled]="!commentForm.valid">Submit</button>
                 </div>
               </form>
             </li>
