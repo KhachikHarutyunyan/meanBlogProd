@@ -25,6 +25,7 @@ import { NewPostComponent } from './components/system/new-post/new-post.componen
 import { BlogService } from './services/blog.service';
 import { SinglePostComponent } from './components/single-post/single-post.component';
 import { EditPostComponent } from './components/system/edit-post/edit-post.component';
+import { PublicProfileComponent } from './components/system/public-profile/public-profile.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { EditPostComponent } from './components/system/edit-post/edit-post.compo
     TableComponent,
     NewPostComponent,
     SinglePostComponent,
-    EditPostComponent
+    EditPostComponent,
+    PublicProfileComponent
   ],
   imports: [
     BrowserModule,

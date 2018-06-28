@@ -1,0 +1,34 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" loadingText="Loading..." type="ball-scale-multiple"></ngx-spinner>
+<div class="row mt-5 mb-5 " *ngIf="loader">
+
+  <div class="col-md-4 aside-avatar">
+    <div class="card border-dark h-100">
+      <div *ngIf="sex" class="avatar-block">
+        <img class="card-img-top avatar" *ngIf="avatar" src="../../../../assets/svg-tour/man.svg" alt="Avatar">
+
+        <img class="card-img-top avatar" *ngIf="!avatar" src="../../../../assets/svg-tour/girl.svg" alt="Avatar">
+      </div>
+
+      <hr>
+      <div class="card-body">
+        <ul class="list-group ">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Username:
+            <span class="badge badge-pill">{{ username }}</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Email:
+            <span class="badge badge-pill">{{ email }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-8 account-info">
+    <div class="account-title">
+      <h3>About <span>{{ username }}</span></h3>
+    </div>
+  </div>
+</div>

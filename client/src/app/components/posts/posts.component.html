@@ -43,7 +43,7 @@
             <p class="card-text">{{ posts.body }}</p>
             <div class="card-text">
               <div class="post-info">
-                <p (click)="guestOnAuthor()"><strong>Posted by: </strong>{{ posts.createdBy }}</p>
+                <p (click)="guestOnAuthor(posts.createdBy)"><strong>Posted by: </strong>{{ posts.createdBy }}</p>
                 <p><strong>Date: </strong>{{ posts.createdAt | date: 'MMM, dd, yyyy' }}</p>
 
               </div>

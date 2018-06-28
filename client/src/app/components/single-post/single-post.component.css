@@ -277,6 +277,7 @@
 
 .comment .avatar{
   width: 8%;
+  min-width: 50px;
 }
 
 .comment.user-comment .avatar{
@@ -346,7 +347,7 @@
 }
 
 
-.avatar {
+.avatar-img {
   width: 50px;
   height: 30px;
   margin: 20px 0;
@@ -449,6 +450,7 @@
   .comment.author-comment .avatar{
       padding: 15px 10px 0 18px;
       width: auto;
+      min-width: 80px;
   }
 
   .comment.user-comment p:after,

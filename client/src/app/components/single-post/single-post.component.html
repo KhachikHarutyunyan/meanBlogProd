@@ -125,10 +125,21 @@
 
               <div class="info">
                   <a href="#">{{ comment.commentator }}</a>
-                  <span>{{ comment.date | date: 'short' }}</span>
+                  <span>{{ comment.date | date: 'short' }}</span>{{ comment.commentatorSex }}
               </div>
               <a class="avatar" href="#">
-                  <img src="../../../assets/svg-tour/girl.svg" width="35" alt="Profile Avatar" title="Anie Silverston" />
+                <a class="avatar" href="#">
+
+                  <div class="avatar-block">
+                    <img class="card-img-top" *ngIf="comment['commentatorSex'] === 'male'"
+                    src="../../../assets/svg-tour/man.svg"
+                    alt="Avatar">
+
+                    <img class="card-img-top" *ngIf="comment['commentatorSex'] !== 'male'"
+                    src="../../../assets/svg-tour/girl.svg"
+                    alt="Avatar">
+                  </div>
+                </a>
               </a>
               <p>{{ comment.comment }}</p>
             </li>
@@ -138,15 +149,15 @@
                 <div class="info">
                     <!-- <a href="#">{{ comment.commentator }}</a> -->
                     <a href="#">{{ comment.author }}</a>
-                    <span>{{ comment.date }}</span>
+                    <span>{{ comment.date | date: 'short' }}</span>
                 </div>
                 <a class="avatar" href="#">
-                  <div *ngIf="userSex" class="avatar-block">
-                    <img class="card-img-top avatar" *ngIf="avatar"
+                  <div  class="avatar-block">
+                    <img class="card-img-top" *ngIf="avatar"
                     src="../../../assets/svg-tour/man.svg"
                     alt="Avatar">
 
-                    <img class="card-img-top avatar" *ngIf="!avatar"
+                    <img class="card-img-top" *ngIf="!avatar"
                     src="../../../assets/svg-tour/girl.svg"
                     alt="Avatar">
                   </div>

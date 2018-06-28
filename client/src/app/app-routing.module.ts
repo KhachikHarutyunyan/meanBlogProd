@@ -13,6 +13,7 @@ import { TableComponent } from './components/system/profile/table/table.componen
 import { NewPostComponent } from './components/system/new-post/new-post.component';
 import { SinglePostComponent } from './components/single-post/single-post.component';
 import { EditPostComponent } from './components/system/edit-post/edit-post.component';
+import { PublicProfileComponent } from './components/system/public-profile/public-profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -27,6 +28,7 @@ const routes: Routes = [
     ] },
     { path: 'new-post', component: NewPostComponent },
     { path: 'edit-post/:id', component: EditPostComponent },
+    { path: 'public-profile/:username', component: PublicProfileComponent }
    ] },
   { path: '**', component: HomeComponent }
 ];

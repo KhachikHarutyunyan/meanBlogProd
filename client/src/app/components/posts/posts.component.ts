@@ -3,6 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../../services/blog.service';
 import { BlogModule } from '../../moduls/blog.module';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-posts',
@@ -29,6 +30,7 @@ export class PostsComponent implements OnInit {
   constructor(
     private spinner: NgxSpinnerService,
     public auth: AuthService,
+    private router: Router,
     private blogService: BlogService
   ) { }
 
@@ -92,10 +94,15 @@ export class PostsComponent implements OnInit {
     }
   }
 
-  guestOnAuthor() {
+  guestOnAuthor(username) {
     const title = 'You must logged in';
     const body = 'Only logged in users can see other users information';
     this.showGuestModal(title, body);
+    if (this.auth.loggedIn() && (this.username !== username)) {
+      this.router.navigate(['/system/public-profile/', username]);
+    } else {
+      this.router.navigate(['/system/profile']);
+    }
   }
 
 

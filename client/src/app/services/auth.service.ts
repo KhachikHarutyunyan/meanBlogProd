@@ -75,6 +75,11 @@ export class AuthService {
     return this.http.get(this.domain + '/authentication/singleBlog/' + id);
   }
 
+  getPublicProfile(username: String) {
+    this.createAuthHeaders();
+    return this.http.get(this.domain + '/authentication/publicProfile/' + username, this.options);
+  }
+
   loggedIn() {
     const token: string = this.jwtHelperService.tokenGetter();
     if (!token) {

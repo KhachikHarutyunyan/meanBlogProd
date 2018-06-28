@@ -70,6 +70,7 @@ export class SinglePostComponent implements OnInit {
           } else {
             this.avatar = false;
           }
+          console.log(this.avatar);
         }
 
         console.log(this.userSex);
@@ -95,6 +96,7 @@ export class SinglePostComponent implements OnInit {
         this.singlePost.push(data['blog']);
         if (this.singlePost['0']['comments'].length > 0) {
           this.postComments = this.singlePost[0]['comments'];
+          console.log(this.postComments);
         }
         this.processing = true;
         this.spinner.hide();
