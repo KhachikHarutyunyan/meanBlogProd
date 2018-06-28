@@ -106,11 +106,8 @@
             Quas similique modi provident suscipit aspernatur deserunt harum illo accusamus voluptas?</p>
       </div>
 
-      <ul>
-        <li *ngFor="let comment of pusherMessages">{{ pusherMessages['comment'] }}</li>
-      </ul>
-
       <div class="col-8" >
+
         <div class="comments-block-header">
           <h4>Comments</h4>
           <button class="btn btn-dark"
@@ -118,41 +115,47 @@
           <p *ngIf="!auth.loggedIn()">Only logged in users can wright comments!</p>
 
         </div>
+
+
           <ul class="comment-section" *ngIf="showForm || postComments.length > 0">
             <!-- <li class="comment user-comment" *ngFor="let comment of postComments"> -->
-            <li class="comment user-comment" *ngFor="let comment of pusherMessages">
+            <li [class]="(username === comment.commentator)? 'comment author-comment': 'comment user-comment'"
+            *ngFor="let comment of postComments"
+             >
+
               <div class="info">
                   <a href="#">{{ comment.commentator }}</a>
-                  <span>4 hours ago</span>
+                  <span>{{ comment.date | date: 'short' }}</span>
               </div>
               <a class="avatar" href="#">
                   <img src="../../../assets/svg-tour/girl.svg" width="35" alt="Profile Avatar" title="Anie Silverston" />
               </a>
               <p>{{ comment.comment }}</p>
             </li>
-<!--
-            <li class="comment author-comment">
-              <div class="info">
-                  <a href="#">Jack Smith</a>
-                  <span>3 hours ago</span>
-              </div>
-              <a class="avatar" href="#">
-                  <img src="../../../assets/svg-tour/girl.svg" width="35" alt="Profile Avatar" title="Jack Smith" />
-              </a>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse gravida sem sit amet molestie portitor.</p>
+
+            <li [class]="(username === comment.author)? 'comment author-comment': 'comment user-comment'"
+              *ngFor="let comment of newComment">
+                <div class="info">
+                    <!-- <a href="#">{{ comment.commentator }}</a> -->
+                    <a href="#">{{ comment.author }}</a>
+                    <span>{{ comment.date }}</span>
+                </div>
+                <a class="avatar" href="#">
+                  <div *ngIf="userSex" class="avatar-block">
+                    <img class="card-img-top avatar" *ngIf="avatar"
+                    src="../../../assets/svg-tour/man.svg"
+                    alt="Avatar">
+
+                    <img class="card-img-top avatar" *ngIf="!avatar"
+                    src="../../../assets/svg-tour/girl.svg"
+                    alt="Avatar">
+                  </div>
+                </a>
+                <p>{{ comment.comment }}</p>
             </li>
 
-            <li class="comment user-comment">
-              <div class="info">
-                  <a href="#">Bradley Jones</a>
-                  <span>1 hour ago</span>
-              </div>
-              <a class="avatar" href="#">
-                  <img src="../../../assets/svg-tour/man.svg" width="35" alt="Profile Avatar" title="Bradley Jones" />
-              </a>
-              <p>Suspendisse gravida sem sit amet molestie portitor?</p>
-            </li>-->
+
+
             <li class="write-new" *ngIf="auth.loggedIn()">
               <form [formGroup]="commentForm">
 

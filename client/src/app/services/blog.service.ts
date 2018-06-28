@@ -5,6 +5,8 @@ import { AuthService } from './auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BlogModule } from '../moduls/blog.module';
 import { environment } from '../../environments/environment';
+import * as io from 'socket.io-client';
+import { Observable } from 'rxjs';
 
 
 
@@ -15,6 +17,7 @@ export class BlogService {
 
   domain = this.auth.domain;
   options;
+  private socket;
 
   pusher: any;
   channel: any;
@@ -28,12 +31,7 @@ export class BlogService {
       encrypted: true
     });
     this.channel = this.pusher.subscribe('events-channel', 'chat');
-  }
-
-  channel;
-
-  public init() {
-    return this.channel;
+    this.socket = io(this.domain);
   }
 
   createAuthHeaders() {
@@ -70,6 +68,18 @@ export class BlogService {
     const postData = { id: id };
     this.createAuthHeaders();
     return this.http.put(this.domain + '/blogs/likePost/', postData, this.options);
+  }
+
+  sendComment(comment) {
+    this.socket.emit('post-comment', comment);
+  }
+
+  public getNewComment = () => {
+    return Observable.create((observer) => {
+      this.socket.on('post-comment', (comment) => {
+        observer.next(comment);
+      });
+    });
   }
 
   postComment(id: String, comment: String) {

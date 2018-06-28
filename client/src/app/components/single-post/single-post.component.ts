@@ -25,6 +25,8 @@ export class SinglePostComponent implements OnInit {
   comments: Array<String> = [];
   showForm: Boolean = false;
 
+  checkClass: String = 'user-comment';
+
   messageClass: String;
   message: String;
 
@@ -34,9 +36,13 @@ export class SinglePostComponent implements OnInit {
 
   commentForm: FormGroup;
 
+  newComment = [];
+
   pusherLike: any = 0;
   pusherLikedBy: any;
-  pusherMessages = [];
+
+  userSex: String;
+  avatar: Boolean;
 
   postComments: Array<any> = [];
 
@@ -56,7 +62,17 @@ export class SinglePostComponent implements OnInit {
     this.spinner.show();
     if (this.auth.loggedIn()) {
       this.auth.getProfile().subscribe(profile => {
-        this.username = profile['user'].username;
+        if (profile['success']) {
+          this.username = profile['user'].username;
+          this.userSex = profile['user']['sex'];
+          if (this.userSex === 'male') {
+            this.avatar = true;
+          } else {
+            this.avatar = false;
+          }
+        }
+
+        console.log(this.userSex);
       });
     }
 
@@ -66,12 +82,10 @@ export class SinglePostComponent implements OnInit {
       this.pusherLikedBy = data.likedBy;
     });
 
-    const channel = this.blogService.init('chat');
-    channel.bind('message', (data) => {
-      this.pusherMessages = this.pusherMessages.concat(data);
-
+    this.blogService.getNewComment().subscribe(comment => {
+      this.newComment.push(comment);
     });
-    console.log(this.pusherMessages);
+
     this.getSinglePost(this.currentUrl['id']);
   }
 
@@ -81,7 +95,6 @@ export class SinglePostComponent implements OnInit {
         this.singlePost.push(data['blog']);
         if (this.singlePost['0']['comments'].length > 0) {
           this.postComments = this.singlePost[0]['comments'];
-          this.pusherMessages = this.singlePost[0]['comments'];
         }
         this.processing = true;
         this.spinner.hide();
@@ -167,10 +180,14 @@ export class SinglePostComponent implements OnInit {
   postComment() {
     const id = this.singlePost[0]['_id'];
     const comment = this.commentForm.get('comment').value;
-    // this.postComments.push({ comment: comment, commentator: this.username });
+    const commentInfo = {
+      username: this.username,
+      comment: comment
+    };
+    this.blogService.sendComment(commentInfo);
     this.blogService.postComment(id, comment).subscribe(data => {
       this.showForm = true;
-      // this.getSinglePost(this.currentUrl['id']);
+      this.commentForm.reset();
       //
     });
   }

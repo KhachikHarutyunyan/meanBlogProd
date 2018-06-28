@@ -316,7 +316,7 @@
 }
 
 .comment.author-comment p{
-  background-color:  #a0de6a;
+  background-color: #a0de6a;
   order: 1;
 }
 
@@ -346,6 +346,11 @@
 }
 
 
+.avatar {
+  width: 50px;
+  height: 30px;
+  margin: 20px 0;
+}
 
 
 /* Comment form */
