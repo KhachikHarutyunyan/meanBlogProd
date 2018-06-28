@@ -212,17 +212,14 @@ module.exports = (router) => {
                       } else {
                         blog.comments.push({
                           comment: req.body.comment,
-                          commentator: user.username
+                          commentator: user.username,
+                          commentatorSex: user.sex
                         });
-                        const data = {
-                            comment: req.body.comment,
-                            commentator: user.username
-                        };
+
                         blog.save((err) => {
                           if (err) {
                             res.json({ success: false, message: 'Something went wrong' });
                           } else {
-                                pusher.trigger(['chat'], 'message', data);
                                 res.json({ success: true, message: 'Comment saved' });
                           }
                         });
