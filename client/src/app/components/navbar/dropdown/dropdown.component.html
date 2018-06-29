@@ -16,7 +16,7 @@
       <a class="nav-link" routerLink="/system/profile">Profile</a>
     </li>
     <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-      <a class="nav-link" routerLink="/">My Posts</a>
+      <a class="nav-link" routerLink="/system/my-posts">My Posts</a>
     </li>
     <li class="nav-item" routerLinkActive="active">
       <a class="nav-link" routerLink="/system/new-post" *ngIf="auth.loggedIn()">Add new Post</a>

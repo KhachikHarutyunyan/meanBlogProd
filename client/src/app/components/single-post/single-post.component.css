@@ -62,6 +62,10 @@
   line-height: 16px;
 }
 
+.animate-btn {
+  transition: all .5s;
+}
+
 
 .card-text p {
   color: #b54141;
@@ -249,10 +253,12 @@
 
 .comment.user-comment .info{
   text-align: right;
+  cursor: pointer;
 }
 
 .comment.author-comment .info{
   order: 3;
+  cursor: pointer;
 }
 
 
@@ -278,6 +284,7 @@
 .comment .avatar{
   width: 8%;
   min-width: 50px;
+  cursor: pointer;
 }
 
 .comment.user-comment .avatar{

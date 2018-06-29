@@ -17,7 +17,7 @@
             <li><strong>Atention : </strong> if you delete this post all information would be lost!</li>
           </ul>
           <div class="modal-btns">
-            <button class="btn btn-dark btn-block"  (click)="deletePost()">Yes</button>
+            <button class="btn btn-dark btn-block" (click)="deletePost()">Yes</button>
             <a >
               <button class="btn btn-dark btn-block"  (click)="closeModal()"
                 data-dismiss="modal">No</button>
@@ -63,7 +63,8 @@
             <p class="card-text">{{ post.body }}</p>
             <div class="card-text">
               <div class="post-info">
-                <p (click)="guestOnAuthor()"><strong>Posted by: </strong>{{ post.createdBy }}</p>
+                <p (click)="goPublicProfile(post.createdBy)">
+                  <strong>Posted by: </strong>{{ post.createdBy }}</p>
                 <p><strong>Date: </strong>{{ post.createdAt | date: 'MMM, dd, yyyy' }}</p>
 
               </div>
@@ -75,7 +76,8 @@
                     {{ pusherLike }}
                   </p>
                   <div class="dropdown-content" *ngIf="auth.loggedIn()">
-                    <a href="" *ngFor="let whoLikes of pusherLikedBy">{{ whoLikes }}</a>
+                    <a (click)="goPublicProfile(whoLikes)"
+                    *ngFor="let whoLikes of pusherLikedBy">{{ whoLikes }}</a>
                   </div>
                 </div> <!-- / dropdown likes -->
 
@@ -110,7 +112,8 @@
 
         <div class="comments-block-header">
           <h4>Comments</h4>
-          <button class="btn btn-dark"
+          <button class="btn btn-dark animate-btn"
+           [ngStyle]="{ 'display': (showBtn && auth.loggedIn())? 'block': 'none' }"
           (click)="showForm = !showForm" *ngIf="postComments.length <= 0">Add Comment</button>
           <p *ngIf="!auth.loggedIn()">Only logged in users can wright comments!</p>
 
@@ -122,13 +125,11 @@
             <li [class]="(username === comment.commentator)? 'comment author-comment': 'comment user-comment'"
             *ngFor="let comment of postComments"
              >
-
-              <div class="info">
-                  <a href="#">{{ comment.commentator }}</a>
-                  <span>{{ comment.date | date: 'short' }}</span>{{ comment.commentatorSex }}
+              <div class="info" (click)="goPublicProfile(comment.commentator)">
+                  <a >{{ comment.commentator }}</a>
+                  <span>{{ comment.date | date: 'short' }}</span>
               </div>
-              <a class="avatar" href="#">
-                <a class="avatar" href="#">
+              <a class="avatar" (click)="goPublicProfile(comment.commentator)">
 
                   <div class="avatar-block">
                     <img class="card-img-top" *ngIf="comment['commentatorSex'] === 'male'"
@@ -139,7 +140,6 @@
                     src="../../../assets/svg-tour/girl.svg"
                     alt="Avatar">
                   </div>
-                </a>
               </a>
               <p>{{ comment.comment }}</p>
             </li>
@@ -147,17 +147,16 @@
             <li [class]="(username === comment.author)? 'comment author-comment': 'comment user-comment'"
               *ngFor="let comment of newComment">
                 <div class="info">
-                    <!-- <a href="#">{{ comment.commentator }}</a> -->
-                    <a href="#">{{ comment.author }}</a>
+                    <a (click)="goPublicProfile(comment.author)">{{ comment.author }}</a>
                     <span>{{ comment.date | date: 'short' }}</span>
                 </div>
                 <a class="avatar" href="#">
                   <div  class="avatar-block">
-                    <img class="card-img-top" *ngIf="avatar"
+                    <img class="card-img-top" *ngIf="comment['sex'] === 'male'"
                     src="../../../assets/svg-tour/man.svg"
                     alt="Avatar">
 
-                    <img class="card-img-top" *ngIf="!avatar"
+                    <img class="card-img-top" *ngIf="comment['sex'] !== 'male'"
                     src="../../../assets/svg-tour/girl.svg"
                     alt="Avatar">
                   </div>

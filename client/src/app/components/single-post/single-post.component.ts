@@ -24,6 +24,7 @@ export class SinglePostComponent implements OnInit {
 
   comments: Array<String> = [];
   showForm: Boolean = false;
+  showBtn: Boolean = true;
 
   checkClass: String = 'user-comment';
 
@@ -70,10 +71,7 @@ export class SinglePostComponent implements OnInit {
           } else {
             this.avatar = false;
           }
-          console.log(this.avatar);
         }
-
-        console.log(this.userSex);
       });
     }
 
@@ -96,7 +94,6 @@ export class SinglePostComponent implements OnInit {
         this.singlePost.push(data['blog']);
         if (this.singlePost['0']['comments'].length > 0) {
           this.postComments = this.singlePost[0]['comments'];
-          console.log(this.postComments);
         }
         this.processing = true;
         this.spinner.hide();
@@ -184,14 +181,28 @@ export class SinglePostComponent implements OnInit {
     const comment = this.commentForm.get('comment').value;
     const commentInfo = {
       username: this.username,
-      comment: comment
+      comment: comment,
+      sex: this.userSex
     };
     this.blogService.sendComment(commentInfo);
     this.blogService.postComment(id, comment).subscribe(data => {
-      this.showForm = true;
+      // this.showForm = true;
       this.commentForm.reset();
-      //
     });
+    this.showBtn = false;
+  }
+
+  goPublicProfile(user) {
+    if (this.auth.loggedIn()) {
+      if ((this.username !== user)) {
+        this.router.navigate(['/system/public-profile/', user]);
+      } else {
+        this.router.navigate(['/system/profile']);
+      }
+    } else {
+      this.guestOnAuthor();
+    }
+
   }
 
 }

@@ -113,7 +113,6 @@ export class NewPostComponent implements OnInit {
         this.uploadedText = 'Upload Image';
         this.fileState = '';
         this.router.navigate(['/posts']);
-        console.log(data);
       }
     });
     this.showPost = false;

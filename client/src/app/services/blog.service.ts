@@ -91,5 +91,10 @@ export class BlogService {
     return this.http.post(this.domain + '/blogs/comment', commentData, this.options );
   }
 
+  getMyPosts(username) {
+    this.createAuthHeaders();
+    return this.http.get(this.domain + '/blogs/myPosts/' + username, this.options);
+  }
+
 
 }

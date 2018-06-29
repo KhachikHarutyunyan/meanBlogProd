@@ -14,6 +14,7 @@ import { NewPostComponent } from './components/system/new-post/new-post.componen
 import { SinglePostComponent } from './components/single-post/single-post.component';
 import { EditPostComponent } from './components/system/edit-post/edit-post.component';
 import { PublicProfileComponent } from './components/system/public-profile/public-profile.component';
+import { MyPostsComponent } from './components/system/my-posts/my-posts.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -28,7 +29,8 @@ const routes: Routes = [
     ] },
     { path: 'new-post', component: NewPostComponent },
     { path: 'edit-post/:id', component: EditPostComponent },
-    { path: 'public-profile/:username', component: PublicProfileComponent }
+    { path: 'public-profile/:username', component: PublicProfileComponent },
+    { path: 'my-posts', component: MyPostsComponent }
    ] },
   { path: '**', component: HomeComponent }
 ];

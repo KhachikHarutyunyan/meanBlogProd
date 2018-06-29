@@ -50,14 +50,14 @@
               <!-- post Infos -->
               <div class="post-info">
                 <div class="dropdown">
-                  <p (click)="likePost(posts._id, posts.createdBy, posts.likedBy)" [title]="likedTitle"><strong>Likes: </strong>
+                  <p (click)="likePost(posts._id, posts.createdBy, posts.likedBy)"
+                   [title]="likedTitle"><strong>Likes: </strong>
                     <img src="../../../assets/svg-tour/like.svg" alt="">
                     <span >{{ posts.likes }}</span>
-                    <!-- <span *ngIf="!(posts._id !== likedId)">{{ pusherLike }}</span> -->
-                    <!-- <span *ngIf="posts._id === likedId">{{ pusherLike }}</span> -->
                   </p>
-                  <div class="dropdown-content" *ngIf="auth.loggedIn()" >
-                    <a href="" *ngFor="let whoLikes of posts.likedBy" >{{ whoLikes }}</a>
+                  <div class="dropdown-content" *ngIf="auth.loggedIn()">
+                    <a (click)="guestOnAuthor(whoLikes)"
+                    *ngFor="let whoLikes of posts.likedBy" >{{ whoLikes }}</a>
                   </div>
                 </div> <!-- / dropdown -->
                 <a [routerLink]="['/single-post/', posts._id]">

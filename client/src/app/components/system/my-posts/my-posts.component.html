@@ -1,0 +1,80 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff"
+ loadingText="Loading..." type="ball-scale-multiple"></ngx-spinner>
+
+ <section *ngIf="!showPosts">
+
+    <div class="md-modal md-effect-1" [ngClass]="modalClass">
+      <div class="md-content">
+        <h3>Delete Modal</h3>
+        <div>
+          <p>Are you sure you would like to delete this post?</p>
+          <ul>
+            <li><strong>Atention : </strong> if you delete this post all information would be lost!</li>
+          </ul>
+          <div class="modal-btns">
+            <button class="btn btn-dark btn-block"  (click)="deletePost()">Yes</button>
+            <a >
+              <button class="btn btn-dark btn-block"  (click)="closeModal()"
+                data-dismiss="modal">No</button>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div> <!--  /  Modal -->
+
+    <div class="md-overlay" ></div><!-- modal background -->
+
+    <div class="row mt-5 mb-5">
+        <div class="col-8">
+          <div class="card mb-3" *ngFor="let posts of myPosts">
+            <img class="card-img-top" src="../../../assets/img/pexels-photo-819733.jpeg" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{ posts.title }}</h5>
+              <p class="card-text">{{ posts.body }}</p>
+              <div class="card-text">
+                <div class="post-info">
+                  <p ><strong>Posted by: </strong>{{ posts.createdBy }}</p>
+                  <p><strong>Date: </strong>{{ posts.createdAt | date: 'MMM, dd, yyyy' }}</p>
+
+                </div>
+                <!-- post Infos -->
+                <div class="post-info">
+                  <div class="dropdown">
+                    <p><strong>Likes: </strong>
+                      <img src="../../../assets/svg-tour/like.svg" alt="">
+                      <span >{{ posts.likes }}</span>
+                    </p>
+                    <div class="dropdown-content">
+                      <a (click)="postLikes(whoLikes)"
+                      *ngFor="let whoLikes of posts.likedBy" >{{ whoLikes }}</a>
+                    </div>
+                  </div> <!-- / dropdown -->
+                  <a [routerLink]="['/single-post/', posts._id]">
+                    <img src="../../../assets/svg-tour/chat.svg" alt="">
+                    {{ posts.comments.length }}<strong class="text-muted" (click)="modal = true"> comments</strong>
+                  </a>
+                </div>
+                <!-- End post Infos -->
+                <div class="post-btns" *ngIf="username === posts.createdBy">
+                  <a [routerLink]="['/system/edit-post/', posts._id]">
+                    <button type="button" class="btn btn-dark">Edit</button>
+                  </a>
+                  <a class="delete" (click)="showModal(posts._id)">
+                    <button type="button" class="btn btn-dark">Delete</button>
+                  </a>
+                </div>
+
+              </div>
+            </div> <!-- / card-body -->
+          </div> <!-- / card -->
+        </div>
+
+        <!-- Aside -->
+        <div class="col-4 pl-0">
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi,
+            hic architecto culpa possimus cum perspiciatis corporis numquam at rem.
+              Quas similique modi provident suscipit aspernatur deserunt harum illo accusamus voluptas?</p>
+        </div>
+    </div>
+  </section>

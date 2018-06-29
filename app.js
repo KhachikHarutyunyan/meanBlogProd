@@ -50,6 +50,7 @@ io.on('connection', (socket) => {
         let newComment = {
             comment: comment.comment,
             author: comment.username,
+            sex: comment.sex,
             date: new Date()
         };
         io.emit('post-comment', newComment);

@@ -95,13 +95,16 @@ export class PostsComponent implements OnInit {
   }
 
   guestOnAuthor(username) {
-    const title = 'You must logged in';
-    const body = 'Only logged in users can see other users information';
-    this.showGuestModal(title, body);
-    if (this.auth.loggedIn() && (this.username !== username)) {
-      this.router.navigate(['/system/public-profile/', username]);
+    if (this.auth.loggedIn()) {
+      if ((this.username !== username)) {
+        this.router.navigate(['/system/public-profile/', username]);
+      } else {
+        this.router.navigate(['/system/profile']);
+      }
     } else {
-      this.router.navigate(['/system/profile']);
+      const title = 'You must logged in';
+      const body = 'Only logged in users can see other users information';
+      this.showGuestModal(title, body);
     }
   }
 

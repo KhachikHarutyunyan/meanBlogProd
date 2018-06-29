@@ -99,7 +99,9 @@
   display: block;
 }
 
-
+.delete .btn-dark {
+  color: #b54141;
+}
 /* Modal styles */
 .md-modal {
 	position: fixed;

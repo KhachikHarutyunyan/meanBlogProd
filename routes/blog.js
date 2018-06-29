@@ -233,6 +233,24 @@ module.exports = (router) => {
         }
       });
 
+      //get all blogs 
+    router.get('/myPosts/:username', (req, res) => {
+        if (!req.params.username) {
+            res.json({ success: false, message: 'No username was provided' });
+        } else {
+            Blog.find({ createdBy: req.params.username }, (err, posts) => {
+                if (err) {
+                    res.json({ success: false, message: 'Something went wrong' });
+                } else {
+                    if (!posts) {
+                        res.json({ success: false, message: 'Posts not found' });
+                    }
+                    res.json({ success: false, posts: posts });
+                }
+            }).sort({ '_id': -1 });
+        }
+      });
+
 
     return router;
 };

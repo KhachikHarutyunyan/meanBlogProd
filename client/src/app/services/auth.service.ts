@@ -89,4 +89,9 @@ export class AuthService {
     return !tokenExpired;
   }
 
+  getUserInfo(username: String) {
+    this.createAuthHeaders();
+    return this.http.get(this.domain + '/user-info/getUserInfo/' + username, this.options);
+  }
+
 }
