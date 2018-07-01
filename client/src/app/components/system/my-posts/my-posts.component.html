@@ -26,7 +26,11 @@
     <div class="md-overlay" ></div><!-- modal background -->
 
     <div class="row mt-5 mb-5">
-        <div class="col-8">
+      <div class="col-8 text-center no-post" *ngIf="noPosts">
+        <h3>You dotn have posts</h3>
+        <a routerLink="/system/new-post">Create post?</a>
+      </div>
+        <div class="col-8" *ngIf="!noPosts">
           <div class="card mb-3" *ngFor="let posts of myPosts">
             <img class="card-img-top" src="../../../assets/img/pexels-photo-819733.jpeg" alt="Card image cap">
             <div class="card-body">

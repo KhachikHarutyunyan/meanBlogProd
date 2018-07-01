@@ -36,12 +36,15 @@
     <div class="col-md-8 account-info">
       <div class="account-title">
         <h3>Tell about yourself <span>{{ username }}</span></h3>
-        <button class="btn btn-dark btn-sm" (click)="goToAddMore()">Add More</button>
+        <input type="button" class="btn btn-dark btn-sm" (click)="goToAddMore()"
+         [value]="showChild? 'Add more': 'Go back'">
       </div>
 
-      <router-outlet  ></router-outlet>
+      <!-- <router-outlet  ></router-outlet> -->
 
-      <app-table [user]="username"></app-table>
+      <app-table [user]="username" *ngIf="showChild"></app-table>
+
+      <app-add-more [user]="username" *ngIf="!showChild"></app-add-more>
 
 
       <!-- <table class="no-border no-strip skills">

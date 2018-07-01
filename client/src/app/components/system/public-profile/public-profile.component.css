@@ -70,6 +70,110 @@
   color: #b54141
 }
 
+.show-table {
+  text-align: center;
+}
+
+.show-table h4 {
+  color: #cac0c0b9;
+}
+
+.show-table span {
+  color: #b54141;
+}
+
+.no-posts  {
+  display: flex;
+  justify-content: center;
+  color: #b54141;
+  margin: 30px;
+}
+
+.no-posts h3 {
+  border-bottom: 1px solid #b54141;
+  width: 150px;
+}
+
+.no-posts span {
+  color: #8c8585;
+  font-size: 20px;
+}
+.post-btns {
+  display: flex;
+  justify-content: flex-end;
+}
+.post-btns a {
+  margin: 0 30px;
+  text-decoration: none;
+}
+
+.post-info {
+  border-bottom: 1px solid #cac0c0b9;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.post-info:first-child {
+  border-top: 1px solid #cac0c0b9;
+  padding-top: 10px;
+}
+.post-info p {
+  margin: 0 30px;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.post-info a {
+  text-decoration: none;
+  color: #b54141;
+}
+
+.post-info img {
+  width: 18px;
+  margin: 0 3px;
+  line-height: 16px;
+}
+
+
+.card-text p {
+  color: #b54141;
+}
+.card-text p strong {
+  color: #8c8585;
+  font-size: 14px;
+}
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 9999;
+}
+
+.dropdown-content a {
+  color: #b54141;
+  padding: 4px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
 
 @media (max-width: 768px) {
   .aside-avatar {

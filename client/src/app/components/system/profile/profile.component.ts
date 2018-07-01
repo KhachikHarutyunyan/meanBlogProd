@@ -3,6 +3,7 @@ import { AuthService } from '../../../services/auth.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { UserInfo } from '../../../moduls/user-info.module';
 
 @Component({
   selector: 'app-profile',
@@ -18,6 +19,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   sex: String;
   avatar: Boolean;
   loader: Boolean = false;
+  showChild: Boolean = true;
+  toggleStatus: String = 'Add more';
 
   displayTable: Boolean = true;
 
@@ -52,8 +55,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   goToAddMore() {
-    this.displayTable = false;
-    this.router.navigate(['/system/profile/add-more']);
+    this.showChild = !this.showChild;
+    // this.router.navigate(['/system/profile/add-more']);
   }
 
 }

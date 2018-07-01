@@ -1,16 +1,16 @@
-.reload-blk {
-  position: absolute;
-  top: 100px;
-  left: 20px;
+.no-post h3 {
+  color: #b54141
+}
+.no-post a {
+  text-decoration: none;
+  color: #88c057;
+  font-size: 20px;
 }
 
-.reload-btn {
-  position: fixed;
-  z-index: 555;
+.no-post a:hover {
+  color: #48662d;
 }
-.reload-btn img {
-  width: 28px;
-}
+
 .btn-success {
   background-color: #88c057;
   border-color: #88c057;

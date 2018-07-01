@@ -1,4 +1,9 @@
-<form [formGroup]="form" class="mb-3" (ngSubmit)="sendUserInfo()">
+<div *ngIf="loadPage">
+  <p>Loading...</p>
+</div>
+<div *ngIf="!loadPage">
+<form [formGroup]="form" class="mb-3">
+
   <label>About me</label>
   <textarea class="form-control" formControlName="about" name="about" placeholder="About me"></textarea>
   <div>
@@ -8,7 +13,8 @@
     </p>
   </div>
   <label>Ocupation</label>
-  <input type="text" class="form-control" formControlName="ocupation" name="ocupation" placeholder="Ocupation">
+  <input type="text" class="form-control" formControlName="ocupation"
+   name="ocupation" placeholder="Ocupation">
   <div>
     <p *ngIf="(form.controls['ocupation'].errors?.minlength && form.controls['ocupation'].dirty) ||
       (form.controls['ocupation'].errors?.maxlength && form.controls['ocupation'].dirty)">
@@ -16,7 +22,8 @@
     </p>
   </div>
   <label>Birthday</label>
-  <my-date-picker placeholder="Select a date" name="mydate" [options]="myDatePickerOptions"
+  <my-date-picker [placeholder]="placeHolder" name="mydate"
+    [options]="myDatePickerOptions"
                     formControlName="myDate"></my-date-picker>
 
   <label>Mobile</label>
@@ -38,10 +45,15 @@
       Minimum characters: 3, Maximum characters: 80
     </p>
   </div>
-  <div class="form-bottom">
-    <a routerLink="/system/profile">Go Back</a>
-    <input type="submit" [disabled]="!form.valid" class="btn btn-dark mt-3" value="Send">
+  <div class="form-bottom" *ngIf="toggleSendBtns">
+    <input type="submit" [disabled]="!form.valid" class="btn btn-dark mt-3"
+    value="Send information" (click)="sendUserInfo()">
   </div>
 
+  <div class="form-bottom" *ngIf="!toggleSendBtns">
+    <input type="button" [disabled]="!form.valid" class="btn btn-dark mt-3"
+     value="Save changes" (click)="saveChanges()">
+  </div>
 
 </form>
+</div>

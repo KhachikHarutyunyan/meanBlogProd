@@ -17,6 +17,7 @@ export class MyPostsComponent implements OnInit {
   modalClass: String;
   deletedId: String;
   showPosts: Boolean = true;
+  noPosts: Boolean = true;
 
   constructor(
     private blogService: BlogService,
@@ -30,8 +31,6 @@ export class MyPostsComponent implements OnInit {
     this.auth.getProfile().subscribe(data => {
       if (data['success']) {
         this.username = data['user']['username'];
-      } else {
-
       }
 
       this.getMyPosts(this.username);
@@ -41,8 +40,14 @@ export class MyPostsComponent implements OnInit {
 
   getMyPosts(username) {
     this.blogService.getMyPosts(username).subscribe((data) => {
-      this.myPosts = data['posts'];
-      this.showPosts = false;
+      if (data['success']) {
+        this.myPosts = data['posts'];
+        this.showPosts = false;
+        this.noPosts = false;
+        if (data['posts'].length === 0) {
+          this.noPosts = true;
+        }
+      }
       this.spinner.hide();
     });
   }

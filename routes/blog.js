@@ -245,7 +245,7 @@ module.exports = (router) => {
                     if (!posts) {
                         res.json({ success: false, message: 'Posts not found' });
                     }
-                    res.json({ success: false, posts: posts });
+                    res.json({ success: true, posts: posts });
                 }
             }).sort({ '_id': -1 });
         }

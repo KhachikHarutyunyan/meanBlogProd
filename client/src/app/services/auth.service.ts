@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserModule } from '../moduls/user.module';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
+import { UserInfo } from '../moduls/user-info.module';
 
 @Injectable({
   providedIn: 'root'
@@ -89,9 +90,19 @@ export class AuthService {
     return !tokenExpired;
   }
 
+  postUserInfo(userInfo: UserInfo) {
+    this.createAuthHeaders();
+    return this.http.post(this.domain + '/user-info/addInfo', userInfo, this.options);
+  }
+
   getUserInfo(username: String) {
     this.createAuthHeaders();
     return this.http.get(this.domain + '/user-info/getUserInfo/' + username, this.options);
+  }
+
+  changeInfo(changes: UserInfo) {
+    this.createAuthHeaders();
+    return this.http.put(this.domain + '/user-info/changeInfo', changes, this.options);
   }
 
 }

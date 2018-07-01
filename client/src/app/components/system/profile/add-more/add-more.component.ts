@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AuthService } from './../../../../services/auth.service';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IMyDpOptions } from 'mydatepicker';
+import { UserInfo } from '../../../../moduls/user-info.module';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -12,17 +15,45 @@ export class AddMoreComponent implements OnInit {
 
   form: FormGroup;
 
+  @Input() user;
+  userInfo: Object;
+  placeHolder: any;
+  loadPage: Boolean = true;
+  toggleSendBtns: Boolean = true;
+
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'dd.mm.yyyy',
     showTodayBtn: false
   };
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private auth: AuthService,
+    private location: Location,
   ) { this.createForm(); }
 
   ngOnInit() {
-    // this.form.controls['about'].setValue('ssasasassasasas');
+    this.auth.getUserInfo(this.user).subscribe(data => {
+      if (data['userInfo'] !== null) {
+        if (data['success']) {
+          this.userInfo = data['userInfo'];
+          this.placeHolder = this.userInfo['birthday'];
+
+          this.form.setValue({
+            about: this.userInfo['about'],
+            ocupation: this.userInfo['ocupation'],
+            myDate: this.userInfo['birthday'],
+            mobile: this.userInfo['mobile'],
+            location: this.userInfo['location'],
+          });
+          this.loadPage = false;
+          this.toggleSendBtns = false;
+        } else {
+        }
+      } else {
+        this.loadPage = false;
+      }
+    });
   }
 
   createForm() {
@@ -85,7 +116,41 @@ export class AddMoreComponent implements OnInit {
   }
 
   sendUserInfo() {
-    console.log(this.form);
-    // console.log(this.form.value.myDate.formatted);
+    const userInfo: UserInfo = {
+      username: this.user,
+      about: this.form.value.about,
+      ocupation: this.form.value.ocupation,
+      birthday: this.form.value.myDate.formatted,
+      mobile: this.form.value.mobile,
+      location: this.form.value.location
+    };
+    this.auth.postUserInfo(userInfo).subscribe(data => {
+      if (data['success']) {
+        this.toggleSendBtns = false;
+      }
+    });
+    this.form.reset();
   }
+
+  saveChanges() {
+    let checkedBirthday;
+    if (this.form.value.myDate.formatted === undefined) {
+      checkedBirthday = this.userInfo['birthday'];
+    } else {
+      checkedBirthday = this.form.value.myDate.formatted;
+    }
+
+    const changedInfo: UserInfo = {
+      username: this.user,
+      about: this.form.value.about,
+      ocupation: this.form.value.ocupation,
+      birthday: checkedBirthday,
+      mobile: this.form.value.mobile,
+      location: this.form.value.location
+    };
+    this.auth.changeInfo(changedInfo).subscribe(data => {
+    });
+    this.form.reset();
+  }
+
 }

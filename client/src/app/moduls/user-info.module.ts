@@ -1,13 +1,13 @@
 
 export class UserInfo {
   constructor(
-    private username: String,
-    private about: String,
-    private ocupation: String,
-    private birthday: Number,
-    private mobile: Number,
-    private location: String,
-    private id?: String
+    public username: String,
+    public about: String,
+    public ocupation: String,
+    public birthday: Number,
+    public mobile: Number,
+    public location: String,
+    public id?: String
   ) {}
 }
 

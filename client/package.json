@@ -21,6 +21,8 @@
     "@angular/platform-browser-dynamic": "^6.0.0",
     "@angular/router": "^6.0.0",
     "@auth0/angular-jwt": "^2.0.0",
+    "@ngx-progressbar/core": "^5.0.1",
+    "@ngx-progressbar/http-client": "^3.0.2",
     "core-js": "^2.5.4",
     "mydatepicker": "^2.6.3",
     "ngx-spinner": "^6.0.0",

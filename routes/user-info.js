@@ -26,7 +26,7 @@ module.exports = (router) => {
                             if (!req.body.location) {
                                 res.json({ success: false, message: 'Location not provided' });
                             } else {
-                                let userInfo = new Info({
+                                let info = new Info({
                                     username: req.body.username,
                                     about: req.body.about,
                                     ocupation: req.body.ocupation,
@@ -34,9 +34,9 @@ module.exports = (router) => {
                                     mobile: req.body.mobile,
                                     location: req.body.location
                                 });
-                                userInfo.save((err) => {
+                                info.save((err) => {
                                     if (err) {
-                                        res.json({ success: false, message: 'Something went wrong' });
+                                        res.json({ success: false, message: err });
                                     } else {
                                         res.json({ success: true, message: 'User Information saved' });
                                     }
@@ -63,7 +63,38 @@ module.exports = (router) => {
         }
     });
 
-    router.put('/changeInfo/');
+    router.put('/changeInfo', (req, res) => {
+      if (!req.body.username) {
+        res.json({ success: false, message: 'Username not provided' });
+      } else {
+        Info.findOne({ username: req.body.username }, (err, userInfo) => {
+          if (err) {
+            res.json({ success: false, message: 'Something went wrong' });
+          } else {
+            if (!userInfo) {
+              res.json({ success: false, message: 'No userInfo found' });
+            } else {
+              if (userInfo.username !== req.body.username) {
+                res.json({ success: false, message: 'You cant change this information' });
+              } else {
+                userInfo.about = req.body.about;
+                userInfo.ocupation = req.body.ocupation;
+                userInfo.birthday = req.body.birthday;
+                userInfo.mobile = req.body.mobile;
+                userInfo.location = req.body.location;
+                userInfo.save((err) => {
+                  if (err) {
+                    res.json({ success: false, message: err });
+                  } else {
+                    res.json({ success: true, message: 'Changes saved' });
+                  }
+                });
+              }
+            }
+          }
+        });
+      }
+    });
 
 
     return router;

@@ -1,38 +1,109 @@
-<table class="no-border no-strip skills">
+
+<div *ngIf="loadPage">
+  <p>Loading...</p>
+</div>
+
+<div *ngIf="!loadPage">
+<table class="no-border no-strip skills bar-class" *ngIf="!showTable">
     <tbody class="no-border-x no-border-y">
       <tr>
         <td class="icon">
           <img src="../../../../assets/svg-tour/businessman-talking-about-data-analysis.svg" alt="About">
         </td>
         <td class="item">About me</td>
-        <td class="info"><span>No information</span></td>
+        <td class="info"><span>{{ about }} </span></td>
       </tr>
       <tr>
         <td class="icon">
           <img src="../../../../assets/svg-tour/man-in-office-desk-with-computer.svg" alt="Location">
         </td>
         <td class="item">Ocupation</td>
-        <td class="info"><span>No information</span></td>
+        <td class="info"><span>{{ ocupation }}</span></td>
       </tr>
       <tr>
         <td class="icon"><img src="../../../../assets/svg-tour/gift.svg" alt=""></td>
         <td class="item">Birthday</td>
-        <td class="info"><span>No information</span></td>
+        <td class="info"><span>{{ birthday }}</span></td>
       </tr>
       <tr>
         <td class="icon"><img src="../../../../assets/svg-tour/phone-book.svg" alt=""></td>
         <td class="item">Mobile</td>
-        <td class="info"> <span>No information</span></td>
+        <td class="info"> <span>{{ mobile }}</span></td>
       </tr>
       <tr>
         <td class="icon"><img src="../../../../assets/svg-tour/pin.svg" alt=""></td>
         <td class="item">Location</td>
-        <td class="info"><span>No information</span></td>
+        <td class="info"><span>{{ location }}</span></td>
       </tr>
       <tr (click)="myPosts()" style="cursor: pointer;">
         <td class="icon"><img src="../../../../assets/svg-tour/post-it.svg" alt=""></td>
         <td class="item">Posts</td>
-        <td><span>12</span></td>
+        <td><span>{{ myPostCount }}</span></td>
       </tr>
     </tbody>
   </table>
+
+
+
+
+
+
+  <table class="no-border no-strip skills" *ngIf="showTable">
+    <tbody class="no-border-x no-border-y">
+      <tr>
+        <td class="icon">
+          <img src="../../../../assets/svg-tour/businessman-talking-about-data-analysis.svg" alt="About">
+        </td>
+        <td class="item">About me</td>
+        <td class="info">
+          <span>No information</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="icon">
+          <img src="../../../../assets/svg-tour/man-in-office-desk-with-computer.svg" alt="Location">
+        </td>
+        <td class="item">Ocupation</td>
+        <td class="info">
+          <span>No information</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="icon">
+          <img src="../../../../assets/svg-tour/gift.svg" alt="">
+        </td>
+        <td class="item">Birthday</td>
+        <td class="info">
+          <span>No information</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="icon">
+          <img src="../../../../assets/svg-tour/phone-book.svg" alt="">
+        </td>
+        <td class="item">Mobile</td>
+        <td class="info">
+          <span>No information</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="icon">
+          <img src="../../../../assets/svg-tour/pin.svg" alt="">
+        </td>
+        <td class="item">Location</td>
+        <td class="info">
+          <span>No information</span>
+        </td>
+      </tr>
+      <tr (click)="myPosts()" style="cursor: pointer;">
+        <td class="icon">
+          <img src="../../../../assets/svg-tour/post-it.svg" alt="">
+        </td>
+        <td class="item">Posts</td>
+        <td>
+          <span>{{ myPostCount }}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

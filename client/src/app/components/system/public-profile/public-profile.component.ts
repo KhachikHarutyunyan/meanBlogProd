@@ -1,3 +1,5 @@
+import { BlogService } from './../../../services/blog.service';
+import { BlogModule } from './../../../moduls/blog.module';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from './../../../services/auth.service';
@@ -19,9 +21,15 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
   avatar: Boolean;
   loader: Boolean = false;
   currentUrl: Object;
+  userInfo: Array<any> = [];
+  userPosts: BlogModule;
+  likedTitle: String = '';
+  showTable: Boolean = false;
+  noPosts: Boolean = false;
 
   constructor(
     private auth: AuthService,
+    private blogService: BlogService,
     private spinner: NgxSpinnerService,
     private activatedRoute: ActivatedRoute
   ) { }
@@ -43,6 +51,44 @@ export class PublicProfileComponent implements OnInit, OnDestroy {
         this.loader = true;
       }
     });
+    this.getUserInfo(this.currentUrl['username']);
+    this.getUserPosts(this.currentUrl['username']);
+  }
+
+  getUserInfo(username) {
+    this.auth.getUserInfo(username).subscribe(data => {
+      console.log(data);
+      if (data['userInfo'] !== null) {
+        if (data['success']) {
+          this.userInfo = data['userInfo'];
+          console.log(this.userInfo);
+        } else {
+          this.showTable = true;
+        }
+      } else {
+        // this.loadPage = false;
+        this.showTable = true;
+      }
+    });
+  }
+
+  getUserPosts(user) {
+    this.blogService.getMyPosts(user).subscribe(data => {
+      this.userPosts = data['posts'];
+      console.log(this.userPosts);
+    });
+  }
+
+  likePost(id, creator, likedBy) {
+      if (likedBy.indexOf(this.username) > -1) {
+        this.likedTitle = 'You can like post only ones';
+      } else {
+        this.getUserPosts(this.currentUrl['username']);
+        this.blogService.likePost(id).subscribe(data => {
+          this.getUserPosts(this.currentUrl['username']);
+        });
+      }
+
   }
 
   ngOnDestroy() {

@@ -29,6 +29,110 @@
   <div class="col-md-8 account-info">
     <div class="account-title">
       <h3>About <span>{{ username }}</span></h3>
+
+    </div>
+    <div *ngIf="showTable" class="show-table">
+      <h4> <span>{{ username }}</span> dont have any information</h4>
+    </div>
+    <table class="no-border no-strip skills bar-class" *ngIf="!showTable">
+      <tbody class="no-border-x no-border-y">
+        <tr>
+          <td class="icon">
+            <img src="../../../../assets/svg-tour/businessman-talking-about-data-analysis.svg" alt="About">
+          </td>
+          <td class="item">About me</td>
+          <td class="info">
+            <span>{{ userInfo['about'] }} </span>
+          </td>
+        </tr>
+        <tr>
+          <td class="icon">
+            <img src="../../../../assets/svg-tour/man-in-office-desk-with-computer.svg" alt="Location">
+          </td>
+          <td class="item">Ocupation</td>
+          <td class="info">
+            <span>{{ userInfo['ocupation'] }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="icon">
+            <img src="../../../../assets/svg-tour/gift.svg" alt="">
+          </td>
+          <td class="item">Birthday</td>
+          <td class="info">
+            <span>{{ userInfo['birthday'] }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="icon">
+            <img src="../../../../assets/svg-tour/phone-book.svg" alt="">
+          </td>
+          <td class="item">Mobile</td>
+          <td class="info">
+            <span>{{ userInfo['mobile'] }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="icon">
+            <img src="../../../../assets/svg-tour/pin.svg" alt="">
+          </td>
+          <td class="item">Location</td>
+          <td class="info">
+            <span>{{ userInfo['location'] }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-12 mt-5">
+
+    <div class="no-posts text-center" *ngIf="noPosts">
+      <h3>This user dont have a post</h3>
+    </div>
+
+    <div class="no-posts text-center" *ngIf="!noPosts">
+      <h3>{{ username }} <span>posts</span></h3>
+    </div>
+    <div *ngIf="!noPosts">
+
+
+    <div class="card mb-3" *ngFor="let posts of userPosts">
+      <img class="card-img-top" src="../../../assets/img/pexels-photo-819733.jpeg" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{ posts.title }}</h5>
+        <p class="card-text">{{ posts.body }}</p>
+        <div class="card-text">
+          <div class="post-info">
+            <p>
+              <strong>Posted by: </strong>{{ posts.createdBy }}</p>
+            <p>
+              <strong>Date: </strong>{{ posts.createdAt | date: 'MMM, dd, yyyy' }}</p>
+
+          </div>
+          <!-- post Infos -->
+          <div class="post-info">
+            <div class="dropdown">
+              <p (click)="likePost(posts._id, posts.createdBy, posts.likedBy)" [title]="likedTitle">
+                <strong>Likes: </strong>
+                <img src="../../../assets/svg-tour/like.svg" alt="">
+                <span>{{ posts.likes }}</span>
+              </p>
+              <div class="dropdown-content">
+                <a  *ngFor="let whoLikes of posts.likedBy">{{ whoLikes }}</a>
+              </div>
+            </div>
+            <!-- / dropdown -->
+            <a [routerLink]="['/single-post/', posts._id]">
+              <img src="../../../assets/svg-tour/chat.svg" alt=""> {{ posts.comments.length }}
+              <strong class="text-muted" (click)="modal = true"> comments</strong>
+            </a>
+          </div>
+
+        </div>
+      </div>
+      <!-- / card-body -->
+    </div>
     </div>
   </div>
 </div>

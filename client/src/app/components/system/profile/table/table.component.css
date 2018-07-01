@@ -21,6 +21,33 @@
   color: #b54141;
 }
 
+.bar-class>ng-progress {
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+
+.bar-class {
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ::ng-deep  */
+::ng-deep .bar-class ng-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+::ng-deep .bar-class ng-progress .ng-progress-bar {
+  position: absolute;
+}
+
 
 @media (max-width: 768px) {
 }
